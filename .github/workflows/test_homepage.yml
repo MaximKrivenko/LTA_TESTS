@@ -1,4 +1,4 @@
-name: Tests
+name: test_homepage
 
 on:
   push:
@@ -28,4 +28,4 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Test with pytest
       run: Test_Cases/test_homepage.py
-        pytest
+        pytest -s -v
