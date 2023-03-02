@@ -345,7 +345,7 @@ class TestModel:
         sub_model_name.send_keys('Test_boolean1')
         sub_model_description = self.driver.find_element(By.CLASS_NAME, 'textarea.sm')
         sub_model_description.send_keys('Дочерняя модель по модели Boolean #1')
-        models_list = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app-models-page/header-layout/div/div[2]/aside-layout/div[2]/app-models-info-panel/form/div/form/lta-select/label/span[2]/span/span/svg-icon[2]/svg')
+        models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
         time.sleep(3)
         models_list.click()
         sub_model_boolean_choose = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main'
@@ -369,7 +369,7 @@ class TestModel:
         wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'classes.error')))
         sub_model_name.send_keys('Test_boolean2')
         sub_model_description.send_keys('Дочерняя модель по модели Boolean #2')
-        models_list = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app-models-page/header-layout/div/div[2]/aside-layout/div[2]/app-models-info-panel/form/div/form/lta-select/label/span[2]/span/span/svg-icon[2]/svg')
+        models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
         time.sleep(3)
         models_list.click()
         sub_model_boolean_choose = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main'
@@ -392,7 +392,7 @@ class TestModel:
         wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'classes.error')))
         sub_model_name.send_keys('Test_directory1')
         sub_model_description.send_keys('Дочерняя модель по модели Directory #1')
-        models_list = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app-models-page/header-layout/div/div[2]/aside-layout/div[2]/app-models-info-panel/form/div/form/lta-select/label/span[2]/span/span/svg-icon[2]/svg')
+        models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
         time.sleep(3)
         models_list.click()
         sub_model_directory_choose = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div'
@@ -416,7 +416,7 @@ class TestModel:
         wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'classes.error')))
         sub_model_name.send_keys('Test_directory2')
         sub_model_description.send_keys('Дочерняя модель по модели Directory #2')
-        models_list = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app-models-page/header-layout/div/div[2]/aside-layout/div[2]/app-models-info-panel/form/div/form/lta-select/label/span[2]/span/span/svg-icon[2]/svg')
+        models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
         time.sleep(3)
         models_list.click()
         sub_model_directory_choose = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div'
@@ -440,7 +440,7 @@ class TestModel:
         wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'classes.error')))
         sub_model_name.send_keys('Test_float1')
         sub_model_description.send_keys('Дочерняя модель по модели Float #1')
-        models_list = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app-models-page/header-layout/div/div[2]/aside-layout/div[2]/app-models-info-panel/form/div/form/lta-select/label/span[2]/span/span/svg-icon[2]/svg')
+        models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
         time.sleep(3)
         models_list.click()
         sub_model_float_choose = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main'
@@ -464,7 +464,7 @@ class TestModel:
         wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'classes.error')))
         sub_model_name.send_keys('Test_float2')
         sub_model_description.send_keys('Дочерняя модель по модели Float #2')
-        models_list = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app-models-page/header-layout/div/div[2]/aside-layout/div[2]/app-models-info-panel/form/div/form/lta-select/label/span[2]/span/span/svg-icon[2]/svg')
+        models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
         time.sleep(3)
         models_list.click()
         sub_model_float_choose = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main'
@@ -487,7 +487,7 @@ class TestModel:
         wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'classes.error')))
         sub_model_name.send_keys('Test_string1')
         sub_model_description.send_keys('Дочерняя модель по модели String #1')
-        models_list = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app-models-page/header-layout/div/div[2]/aside-layout/div[2]/app-models-info-panel/form/div/form/lta-select/label/span[2]/span/span/svg-icon[2]/svg')
+        models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
         time.sleep(3)
         models_list.click()
         sub_model_string_choose = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main'
@@ -510,7 +510,7 @@ class TestModel:
         wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'classes.error')))
         sub_model_name.send_keys('Test_string2')
         sub_model_description.send_keys('Дочерняя модель по модели String #2')
-        models_list = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app-models-page/header-layout/div/div[2]/aside-layout/div[2]/app-models-info-panel/form/div/form/lta-select/label/span[2]/span/span/svg-icon[2]/svg')
+        models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
         time.sleep(3)
         models_list.click()
         sub_model_string_choose = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main'
