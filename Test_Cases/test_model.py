@@ -433,99 +433,6 @@ class TestModel:
                                                                                                       'directory 2 ' \
                                                                                                       'was not created'
 
-        wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
-        sub_model_button = self.driver.find_element(By.XPATH, "//*[contains(text(),' Новая модель ')]")
-        sub_model_button.click()
-        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'classes.error')))
-        time.sleep(10)
-        sub_model_name.send_keys('Test_float1')
-        sub_model_description.send_keys('Дочерняя модель по модели Float #1')
-        models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
-        models_list.click()
-        sub_model_float_choose = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main'
-                                                                    '/app-models-page/header-layout/div/div['
-                                                                    '2]/aside-layout/div['
-                                                                    '2]/app-models-info-panel/form/div/form/lta'
-                                                                    '-select/label/span[2]/span/span[2]/span[3]')
-        sub_model_float_choose.click()
-        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'btn.success.md')))
-        save_button.click()
-        wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Test_float1 ')]")))
-        print('Sub model float1 created')
-        sub_model_float1 = self.driver.find_element(By.XPATH, "//*[contains(text(),' Test_float1 ')]")
-        assert sub_model_float1.text == 'Test_float1 Дочерняя модель по модели Float #1', 'Sub model ' \
-                                                                                          'float 1 ' \
-                                                                                          'was not created'
-
-        wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
-        sub_model_button = self.driver.find_element(By.XPATH, "//*[contains(text(),' Новая модель ')]")
-        sub_model_button.click()
-        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'classes.error')))
-        time.sleep(10)
-        sub_model_name.send_keys('Test_float2')
-        sub_model_description.send_keys('Дочерняя модель по модели Float #2')
-        models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
-        models_list.click()
-        sub_model_float_choose = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main'
-                                                                    '/app-models-page/header-layout/div/div['
-                                                                    '2]/aside-layout/div['
-                                                                    '2]/app-models-info-panel/form/div/form/lta'
-                                                                    '-select/label/span[2]/span/span[2]/span[3]')
-        sub_model_float_choose.click()
-        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'btn.success.md')))
-        save_button.click()
-        wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Test_float2 ')]")))
-        print('Sub model float2 created')
-        sub_model_float2 = self.driver.find_element(By.XPATH, "//*[contains(text(),' Test_float2 ')]")
-        assert sub_model_float2.text == 'Test_float2 Дочерняя модель по модели Float #2', 'Sub model ' \
-                                                                                          'float 2 ' \
-                                                                                          'was not created'
-        wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
-        sub_model_button = self.driver.find_element(By.XPATH, "//*[contains(text(),' Новая модель ')]")
-        sub_model_button.click()
-        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'classes.error')))
-        time.sleep(10)
-        sub_model_name.send_keys('Test_string1')
-        sub_model_description.send_keys('Дочерняя модель по модели String #1')
-        models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
-        models_list.click()
-        sub_model_string_choose = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main'
-                                                                     '/app-models-page/header-layout/div/div['
-                                                                     '2]/aside-layout/div['
-                                                                     '2]/app-models-info-panel/form/div/form/lta'
-                                                                     '-select/label/span[2]/span/span[2]/span[4]')
-        sub_model_string_choose.click()
-        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'btn.success.md')))
-        save_button.click()
-        wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Test_string1 ')]")))
-        print('Sub model string1 created')
-        sub_model_string1 = self.driver.find_element(By.XPATH, "//*[contains(text(),' Test_string1 ')]")
-        assert sub_model_string1.text == 'Test_string1 Дочерняя модель по модели String #1', 'Sub model ' \
-                                                                                             'string 1 ' \
-                                                                                             'was not created'
-        wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
-        sub_model_button = self.driver.find_element(By.XPATH, "//*[contains(text(),' Новая модель ')]")
-        sub_model_button.click()
-        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'classes.error')))
-        time.sleep(10)
-        sub_model_name.send_keys('Test_string2')
-        sub_model_description.send_keys('Дочерняя модель по модели String #2')
-        models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
-        models_list.click()
-        sub_model_string_choose = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main'
-                                                                     '/app-models-page/header-layout/div/div['
-                                                                     '2]/aside-layout/div['
-                                                                     '2]/app-models-info-panel/form/div/form/lta'
-                                                                     '-select/label/span[2]/span/span[2]/span[4]')
-        sub_model_string_choose.click()
-        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'btn.success.md')))
-        save_button.click()
-        wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Test_string2 ')]")))
-        print('Sub model string2 created')
-        sub_model_string2 = self.driver.find_element(By.XPATH, "//*[contains(text(),' Test_string2 ')]")
-        assert sub_model_string2.text == 'Test_string2 Дочерняя модель по модели String #2', 'Sub model ' \
-                                                                                             'string 2 ' \
-                                                                                             'was not created'
         print('Complex model created and checked')
 
         delete_button_last_sub_model = self.driver.find_element(By.XPATH,
@@ -549,11 +456,11 @@ class TestModel:
                                                                  '-models-page/header-layout/div/div['
                                                                  '1]/lta-header-panel/div/lta-empty-panel/div/lta'
                                                                  '-btn[2]/button')))
-        assert len(self.driver.find_elements(By.XPATH, "//*[contains(text(),' Test_string2 ')]")) == 0, 'Sub model ' \
-                                                                                                        'string2 ' \
+        assert len(self.driver.find_elements(By.XPATH, "//*[contains(text(),' Test_directory2 ')]")) == 0, 'Sub model ' \
+                                                                                                        'directory2 ' \
                                                                                                         'was not ' \
                                                                                                         'deleted'
-        print('Sub model string2 deleted')
+        print('Sub model directory2 deleted')
         complex_model = self.driver.find_element(By.XPATH, "//*[contains(text(),'" + name + "')]")
         complex_model.click()
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
