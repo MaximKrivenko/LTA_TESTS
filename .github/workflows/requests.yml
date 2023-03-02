@@ -23,7 +23,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install requirements 2.28.2
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Run requests
       run:
         lta_servers_http.py
