@@ -2,6 +2,8 @@ import time
 
 import pytest
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options as chrome_options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
@@ -19,9 +21,10 @@ def get_chrome_options():
 
 
 @pytest.fixture
-def get_webdriver(get_chrome_options):
+def get_webdriver(request, get_chrome_options):
     options = get_chrome_options
-    driver = webdriver.Chrome(options=options)
+    driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+    request.cls.driver = driver
     return driver
 
 
@@ -41,13 +44,13 @@ def authorization(setup):
     print('USERNAME PLACED')
     password = driver.find_element(By.XPATH,
                                    '/html/body/app-root/app-auth-screen/app-login-screen/form/div/lta-input[2]/label/span[2]/input')
-    password.send_keys('admin')
+    password.send_keys('admin1')
     print('PASSWORD PLACED')
     button_login = driver.find_element(By.XPATH,
                                        '/html/body/app-root/app-auth-screen/app-login-screen/form/lta-btn/button')
     button_login.click()
     wait = WebDriverWait(driver, 20, 0.5)
-    wait.until(ec.url_to_be('http://185.221.152.176/hmi/17'))
+    wait.until(ec.url_to_be('http://185.221.152.176/hmi/755'))
     print('LOG IN SUCCESS')
     return driver
 
@@ -59,12 +62,12 @@ def authorization1(setup):
     username.send_keys('admin')
     password = driver.find_element(By.XPATH,
                                    '/html/body/app-root/app-auth-screen/app-login-screen/form/div/lta-input[2]/label/span[2]/input')
-    password.send_keys('admin')
+    password.send_keys('admin1')
     button_login = driver.find_element(By.XPATH,
                                        '/html/body/app-root/app-auth-screen/app-login-screen/form/lta-btn/button')
     button_login.click()
     wait = WebDriverWait(driver, 15, 0.5)
-    wait.until(ec.url_to_be('http://185.221.152.176/hmi/17'))
+    wait.until(ec.url_to_be('http://185.221.152.176/hmi/755'))
     return driver
 
 @pytest.fixture
@@ -81,3 +84,18 @@ def models_page(authorization1):
     wait_models = WebDriverWait(driver, 10, 0.3)
     wait_models.until(ec.url_to_be('http://185.221.152.176/conf/data/models'))
     return driver
+
+@pytest.fixture
+def objects_page(authorization1):
+    driver = authorization1
+    button_settings = driver.find_element(By.XPATH, '/html/body/app-root/app-main-page/toolbar/div/div['
+                                                    '3]/div[4]/svg-icon')
+    button_settings.click()
+    wait = WebDriverWait(driver, 10, 0.3)
+    wait.until(ec.url_to_be('http://185.221.152.176/conf/settings/figma'))
+    objects_button = driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside'
+                                                           '/nav/ul/li[4]/a')
+    objects_button.click()
+    wait.until(ec.url_to_be('http://185.221.152.176/conf/data/objects'))
+    return driver
+
