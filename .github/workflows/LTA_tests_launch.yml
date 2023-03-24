@@ -37,4 +37,4 @@ jobs:
           context: 'Test report'
           state: 'success'
           sha: ${{ github.event.pull_request.head.sha }}
-          target_url: MaximKrivenko.io/github-allure-history/${{ github.run_number }}
+          target_url: MaximKrivenko.github.io/github-allure-history/${{ github.run_number }}
