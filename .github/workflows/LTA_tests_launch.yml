@@ -37,7 +37,7 @@ jobs:
 
     - name: Chown user
       run: |
-        sudo chown -R $USER:$USER $GITHUB_WORKSPACE
+        sudo chown -R $USER:$USER /home/runner/work/LTA_TESTS/
 
     - name: Get Allure history
       uses: actions/checkout@v2
@@ -47,8 +47,6 @@ jobs:
         lfs: true
         ref: gh-pages
         path: gh-pages
-
-
 
     - name: Allure Report action from marketplace
       uses: simple-elf/allure-report-action@master
