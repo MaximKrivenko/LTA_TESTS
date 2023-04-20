@@ -1286,7 +1286,7 @@ class TestObject:
                                                                                                             f'object ' \
                                                                                                             f'with ' \
                                                                                                             f'{model_name} was not deleted'
-        print(f'Root object has not child object with {model_name} model')
+        print(f'Root object does not have child object with {model_name} model')
 
         root_object = self.driver.find_element(By.XPATH, "//*[contains(text(),'" + object_name + "')]")
         root_object.click()
