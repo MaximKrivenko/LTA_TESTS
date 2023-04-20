@@ -1,9 +1,12 @@
 import pytest
-
+import os
+from dotenv import load_dotenv
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
 
+load_dotenv()
+env_url = os.getenv('URL')
 
 class TestPlatform:
     print('TEST LTA PLATFORM LAUNCHED')
@@ -17,7 +20,7 @@ class TestPlatform:
         button_settings = self.driver.find_element(By.XPATH, '/html/body/app-root/app-main-page/toolbar/div/div['
                                                             '3]/div[4]/svg-icon')
         button_settings.click()
-        wait.until(ec.url_to_be('http://185.221.152.176/conf/settings/figma'))
+        wait.until(ec.url_to_be(f'{env_url}conf/settings/figma'))
         button_settings_main = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
                                                                  '-settings-page/header-layout/div/div['
                                                                  '2]/aside-layout/div['
@@ -35,7 +38,7 @@ class TestPlatform:
         button_services = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside'
                                                             '/nav/ul/li[12]')
         button_services.click()
-        wait.until(ec.url_to_be('http://185.221.152.176/conf/services'))
+        wait.until(ec.url_to_be(f'{env_url}conf/services'))
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div'
                                                                            '/main/app-services-page/header-layout/div'
                                                                            '/div[2]/aside-layout/div['
@@ -47,7 +50,7 @@ class TestPlatform:
         button_alerts = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside'
                                                           '/nav/ul/li[11]/a')
         button_alerts.click()
-        wait.until(ec.url_to_be('http://185.221.152.176/conf/alerts'))
+        wait.until(ec.url_to_be(f'{env_url}conf/alerts'))
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div'
                                                                          '/main/app-alerts-page/header-layout/div'
                                                                          '/div[2]/aside-layout/div['
@@ -59,7 +62,7 @@ class TestPlatform:
         button_cluster = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside'
                                                            '/nav/ul/li[10]/a')
         button_cluster.click()
-        wait.until(ec.url_to_be('http://185.221.152.176/conf/cluster'))
+        wait.until(ec.url_to_be(f'{env_url}conf/cluster'))
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div'
                                                                           '/main/app-cluster-page/header-layout/div'
                                                                           '/div[2]/app-cluster-table/lta-table-view')))
@@ -70,7 +73,7 @@ class TestPlatform:
         button_driver_types = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu'
                                                                 '/aside/nav/ul/li[9]/a')
         button_driver_types.click()
-        wait.until(ec.url_to_be('http://185.221.152.176/conf/driver-types'))
+        wait.until(ec.url_to_be(f'{env_url}conf/driver-types'))
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout'
                                                                                '/div/main/app-driver-types/header'
                                                                                '-layout/div/div[2]/aside-layout/div['
@@ -83,7 +86,7 @@ class TestPlatform:
         button_drivers = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside'
                                                            '/nav/ul/li[8]/a')
         button_drivers.click()
-        wait.until(ec.url_to_be('http://185.221.152.176/conf/drivers'))
+        wait.until(ec.url_to_be(f'{env_url}conf/drivers'))
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div'
                                                                           '/main/app-drivers-page/header-layout/div'
                                                                           '/div[2]/aside-layout/div['
@@ -95,7 +98,7 @@ class TestPlatform:
         components_button = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu'
                                                               '/aside/nav/ul/li[7]/a')
         components_button.click()
-        wait.until(ec.url_to_be('http://185.221.152.176/conf/hmi/components'))
+        wait.until(ec.url_to_be(f'{env_url}conf/hmi/components'))
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout'
                                                                              '/div/main/app-hmi-components-dashboard'
                                                                              '/header-layout/div/div[2]')))
@@ -106,7 +109,7 @@ class TestPlatform:
         hmi_button = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside/nav'
                                                        '/ul/li[6]/a')
         hmi_button.click()
-        wait.until(ec.url_to_be('http://185.221.152.176/conf/hmi/screens'))
+        wait.until(ec.url_to_be(f'{env_url}conf/hmi/screens'))
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main'
                                                                       '/app-hmi-dashboard/header-layout/div/div[2]')))
         print('HMI IS ACTIVE')
@@ -116,7 +119,7 @@ class TestPlatform:
         models_button = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside'
                                                           '/nav/ul/li[5]/a')
         models_button.click()
-        wait.until(ec.url_to_be('http://185.221.152.176/conf/data/models'))
+        wait.until(ec.url_to_be(f'{env_url}conf/data/models'))
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div'
                                                                          '/main/app-models-page/header-layout/div'
                                                                          '/div[2]/aside-layout/div['
@@ -128,7 +131,7 @@ class TestPlatform:
         objects_button = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside'
                                                            '/nav/ul/li[4]/a')
         objects_button.click()
-        wait.until(ec.url_to_be('http://185.221.152.176/conf/data/objects'))
+        wait.until(ec.url_to_be(f'{env_url}conf/data/objects'))
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div'
                                                                           '/main/app-objects-page/header-layout/div'
                                                                           '/div[2]/aside-layout/div['
@@ -140,7 +143,7 @@ class TestPlatform:
         roles_button = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside/nav'
                                                          '/ul/li[3]/a')
         roles_button.click()
-        wait.until(ec.url_to_be('http://185.221.152.176/conf/user-administration/roles'))
+        wait.until(ec.url_to_be(f'{env_url}conf/user-administration/roles'))
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div'
                                                                         '/main/app-roles-page/header-layout/div/div['
                                                                         '2]')))
@@ -151,7 +154,7 @@ class TestPlatform:
         users_button = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside/nav'
                                                          '/ul/li[2]/a')
         users_button.click()
-        wait.until(ec.url_to_be('http://185.221.152.176/conf/user-administration/users'))
+        wait.until(ec.url_to_be(f'{env_url}conf/user-administration/users'))
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div'
                                                                         '/main/app-users-page/header-layout/div/div['
                                                                         '2]/aside-layout')))
