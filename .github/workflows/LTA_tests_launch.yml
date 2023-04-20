@@ -35,6 +35,10 @@ jobs:
         pytest -s -v -p no:warnings --alluredir=allure-results
       continue-on-error: true
 
+    - name: Chown user
+      run: |
+        sudo chown -R $USER:$USER $GITHUB_WORKSPACE
+
     - name: Get Allure history
       uses: actions/checkout@v2
       if: always()
@@ -44,9 +48,7 @@ jobs:
         ref: gh-pages
         path: gh-pages
 
-    - name: Chown user
-      run: |
-        sudo chown -R $USER:$USER $GITHUB_WORKSPACE
+
 
     - name: Allure Report action from marketplace
       uses: simple-elf/allure-report-action@master
