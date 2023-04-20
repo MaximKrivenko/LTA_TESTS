@@ -10,9 +10,9 @@ permissions:
   contents: read
 
 env:
-    URL: 'http://cert1n1.apcs.io/'
-    USERNAME: 'admin'
-    PASSWORD: 'admin1'
+    URL: ${{ secrets.URL }}
+    USERNAME: ${{ secrets.USERNAME }}
+    PASSWORD: ${{ secrets.PASSWORD }}
 
 jobs:
   tests:
