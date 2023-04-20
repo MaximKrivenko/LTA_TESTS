@@ -40,8 +40,13 @@ jobs:
       if: always()
       continue-on-error: true
       with:
+        lfs: true
         ref: gh-pages
         path: gh-pages
+
+    - name: Chown user
+      run: |
+        sudo chown -R $USER:$USER $GITHUB_WORKSPACE
 
     - name: Allure Report action from marketplace
       uses: simple-elf/allure-report-action@master
