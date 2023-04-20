@@ -1,10 +1,14 @@
 import pytest
 import time
 import random
+import os
+from dotenv import load_dotenv
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
 
+load_dotenv()
+env_url = os.getenv('URL')
 
 class TestObject:
     # simple root object test
@@ -53,6 +57,7 @@ class TestObject:
         assert created_object.text == f'{name} Directory', 'Object was not created'
         print('Simple root object checked')
         delete_button = self.driver.find_element(By.CLASS_NAME, 'btn.btn-icon.danger.md')
+        time.sleep(2)
         delete_button.click()
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
                                                              '-objects-page/lta-delete-dialog/lta-modal-layout/div'
@@ -60,6 +65,7 @@ class TestObject:
         delete_button_window = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
                                                                   '-objects-page/lta-delete-dialog/lta-modal-layout'
                                                                   '/div/lta-modal/div[2]/lta-btn[2]/button')
+        time.sleep(2)
         delete_button_window.click()
         wait.until(ec.invisibility_of_element_located((By.CLASS_NAME, 'btn.btn-icon.danger.md')))
         assert len(self.driver.find_elements(By.XPATH, "//*[contains(text(),'" + name + "')]")) == 0, 'Simple root ' \
@@ -152,6 +158,7 @@ class TestObject:
                                                              '2]/button')))
 
         delete_button = self.driver.find_element(By.CLASS_NAME, 'btn.btn-icon.danger.md')
+        time.sleep(2)
         delete_button.click()
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
                                                              '-objects-page/lta-delete-dialog/lta-modal-layout/div'
@@ -159,6 +166,7 @@ class TestObject:
         delete_button_window = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
                                                                   '-objects-page/lta-delete-dialog/lta-modal-layout'
                                                                   '/div/lta-modal/div[2]/lta-btn[2]/button')
+        time.sleep(2)
         delete_button_window.click()
         wait.until(ec.invisibility_of_element_located((By.CLASS_NAME, 'btn.btn-icon.danger.md')))
         assert len(self.driver.find_elements(By.XPATH, "//*[contains(text(),'" + name + "')]")) == 0, 'First simple ' \
@@ -241,6 +249,7 @@ class TestObject:
         create_child_object_button.click()
         child_name = 'Child_test_object'
         child_description = 'Дочерний тестовый объект'
+
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
                                                              '-objects-page/header-layout/div/div['
                                                              '2]/aside-layout/div['
@@ -278,6 +287,7 @@ class TestObject:
 
         wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'btn.btn-icon.danger.md')))
         delete_button = self.driver.find_element(By.CLASS_NAME, 'btn.btn-icon.danger.md')
+        time.sleep(2)
         delete_button.click()
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
                                                              '-objects-page/lta-delete-dialog/lta-modal-layout/div'
@@ -285,6 +295,7 @@ class TestObject:
         delete_button_window = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
                                                                   '-objects-page/lta-delete-dialog/lta-modal-layout'
                                                                   '/div/lta-modal/div[2]/lta-btn[2]/button')
+        time.sleep(2)
         delete_button_window.click()
         wait.until(ec.invisibility_of_element_located((By.CLASS_NAME, 'btn.btn-icon.danger.md')))
         assert len(self.driver.find_elements(By.XPATH, "//*[contains(text(),'" + name + "')]")) == 0, 'Complex root ' \
@@ -464,6 +475,7 @@ class TestObject:
 
         wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'btn.btn-icon.danger.md')))
         delete_button = self.driver.find_element(By.CLASS_NAME, 'btn.btn-icon.danger.md')
+        time.sleep(2)
         delete_button.click()
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
                                                              '-objects-page/lta-delete-dialog/lta-modal-layout/div'
@@ -471,6 +483,7 @@ class TestObject:
         delete_button_window = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
                                                                   '-objects-page/lta-delete-dialog/lta-modal-layout'
                                                                   '/div/lta-modal/div[2]/lta-btn[2]/button')
+        time.sleep(2)
         delete_button_window.click()
         wait.until(ec.invisibility_of_element_located((By.CLASS_NAME, 'btn.btn-icon.danger.md')))
         assert len(self.driver.find_elements(By.XPATH, "//*[contains(text(),'" + name + "')]")) == 0, 'Complex root ' \
@@ -636,6 +649,7 @@ class TestObject:
 
         wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'btn.btn-icon.danger.md')))
         delete_button = self.driver.find_element(By.CLASS_NAME, 'btn.btn-icon.danger.md')
+        time.sleep(2)
         delete_button.click()
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
                                                              '-objects-page/lta-delete-dialog/lta-modal-layout/div'
@@ -643,6 +657,7 @@ class TestObject:
         delete_button_window = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
                                                                   '-objects-page/lta-delete-dialog/lta-modal-layout'
                                                                   '/div/lta-modal/div[2]/lta-btn[2]/button')
+        time.sleep(2)
         delete_button_window.click()
         wait.until(ec.invisibility_of_element_located((By.CLASS_NAME, 'btn.btn-icon.danger.md')))
         assert len(self.driver.find_elements(By.XPATH, "//*[contains(text(),'" + child_name_2 + "')]")) == 0, 'Child ' \
@@ -658,6 +673,7 @@ class TestObject:
 
         wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'btn.btn-icon.danger.md')))
         delete_button = self.driver.find_element(By.CLASS_NAME, 'btn.btn-icon.danger.md')
+        time.sleep(2)
         delete_button.click()
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
                                                              '-objects-page/lta-delete-dialog/lta-modal-layout/div'
@@ -665,6 +681,7 @@ class TestObject:
         delete_button_window = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
                                                                   '-objects-page/lta-delete-dialog/lta-modal-layout'
                                                                   '/div/lta-modal/div[2]/lta-btn[2]/button')
+        time.sleep(2)
         delete_button_window.click()
         wait.until(ec.invisibility_of_element_located((By.CLASS_NAME, 'btn.btn-icon.danger.md')))
         assert len(self.driver.find_elements(By.XPATH, "//*[contains(text(),'" + name + "')]")) == 0, 'Complex root ' \
@@ -795,7 +812,7 @@ class TestObject:
         objects_button = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside'
                                                             '/nav/ul/li[4]/a')
         objects_button.click()
-        wait.until(ec.url_to_be('http://185.221.152.176/conf/data/objects'))
+        wait.until(ec.url_to_be(f'{env_url}conf/data/objects'))
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'Directory')]")))
 
         object_name = 'AutoTest_Object'
@@ -904,6 +921,7 @@ class TestObject:
 
         wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'btn.btn-icon.danger.md')))
         delete_button = self.driver.find_element(By.CLASS_NAME, 'btn.btn-icon.danger.md')
+        time.sleep(2)
         delete_button.click()
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
                                                              '-objects-page/lta-delete-dialog/lta-modal-layout/div'
@@ -911,6 +929,7 @@ class TestObject:
         delete_button_window = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
                                                                   '-objects-page/lta-delete-dialog/lta-modal-layout'
                                                                   '/div/lta-modal/div[2]/lta-btn[2]/button')
+        time.sleep(2)
         delete_button_window.click()
         wait.until(ec.invisibility_of_element_located((By.CLASS_NAME, 'btn.btn-icon.danger.md')))
         assert len(self.driver.find_elements(By.XPATH, "//*[contains(text(),'" + object_name + "')]")) == 0, 'Root ' \
@@ -924,7 +943,7 @@ class TestObject:
         models_button = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside'
                                                            '/nav/ul/li[5]/a')
         models_button.click()
-        wait.until(ec.url_to_be('http://185.221.152.176/conf/data/models'))
+        wait.until(ec.url_to_be(f'{env_url}conf/data/models'))
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div'
                                                              '/main/app-models-page/header-layout/div'
                                                              '/div[2]/aside-layout/div['
@@ -942,6 +961,7 @@ class TestObject:
                                                  '/html/body/app-root/app-admin-layout/div/main/app-models-page'
                                                  '/header-layout/div/div['
                                                  '1]/lta-header-panel/div/lta-empty-panel/div/lta-btn[2]/button')
+        time.sleep(2)
         delete_button.click()
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
                                                              '-models-page/lta-delete-dialog/lta-modal-layout/div/lta'
@@ -949,6 +969,7 @@ class TestObject:
         delete_button_window = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
                                                                   '-models-page/lta-delete-dialog/lta-modal-layout'
                                                                   '/div/lta-modal/div[2]/lta-btn[2]/button')
+        time.sleep(2)
         delete_button_window.click()
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app-models'
                                                              '-page/app-model-delete-options-dialog/lta-modal-layout'
@@ -961,6 +982,7 @@ class TestObject:
                                                                    '-models-page/app-model-delete-options-dialog/lta'
                                                                    '-modal-layout/div/lta-modal/div[2]/lta-btn['
                                                                    '2]/button')
+        time.sleep(2)
         delete_button_window1.click()
         wait.until(ec.invisibility_of_element_located((By.XPATH,
                                                        '/html/body/app-root/app-admin-layout/div/main/app-models-page'
@@ -1095,7 +1117,7 @@ class TestObject:
         objects_button = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside'
                                                             '/nav/ul/li[4]/a')
         objects_button.click()
-        wait.until(ec.url_to_be('http://185.221.152.176/conf/data/objects'))
+        wait.until(ec.url_to_be(f'{env_url}conf/data/objects'))
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'Directory')]")))
 
         object_name = 'AutoTest_Object'
@@ -1201,7 +1223,7 @@ class TestObject:
         models_button = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside'
                                                            '/nav/ul/li[5]/a')
         models_button.click()
-        wait.until(ec.url_to_be('http://185.221.152.176/conf/data/models'))
+        wait.until(ec.url_to_be(f'{env_url}conf/data/models'))
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div'
                                                              '/main/app-models-page/header-layout/div'
                                                              '/div[2]/aside-layout/div['
@@ -1219,6 +1241,7 @@ class TestObject:
                                                  '/html/body/app-root/app-admin-layout/div/main/app-models-page'
                                                  '/header-layout/div/div['
                                                  '1]/lta-header-panel/div/lta-empty-panel/div/lta-btn[2]/button')
+        time.sleep(2)
         delete_button.click()
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
                                                              '-models-page/lta-delete-dialog/lta-modal-layout/div/lta'
@@ -1226,6 +1249,7 @@ class TestObject:
         delete_button_window = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
                                                                   '-models-page/lta-delete-dialog/lta-modal-layout'
                                                                   '/div/lta-modal/div[2]/lta-btn[2]/button')
+        time.sleep(2)
         delete_button_window.click()
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app-models'
                                                              '-page/app-model-delete-options-dialog/lta-modal-layout'
@@ -1238,6 +1262,7 @@ class TestObject:
                                                                    '-models-page/app-model-delete-options-dialog/lta'
                                                                    '-modal-layout/div/lta-modal/div[2]/lta-btn['
                                                                    '2]/button')
+        time.sleep(2)
         delete_button_window1.click()
         wait.until(ec.invisibility_of_element_located((By.XPATH,
                                                        '/html/body/app-root/app-admin-layout/div/main/app-models-page'
@@ -1254,7 +1279,7 @@ class TestObject:
         objects_button = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside'
                                                             '/nav/ul/li[4]/a')
         objects_button.click()
-        wait.until(ec.url_to_be('http://185.221.152.176/conf/data/objects'))
+        wait.until(ec.url_to_be(f'{env_url}conf/data/objects'))
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'Directory')]")))
 
         assert len(self.driver.find_elements(By.XPATH, "//*[contains(text(),'" + child_name + "')]")) == 0, f'Child ' \
@@ -1268,6 +1293,7 @@ class TestObject:
 
         wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'btn.btn-icon.danger.md')))
         delete_button = self.driver.find_element(By.CLASS_NAME, 'btn.btn-icon.danger.md')
+        time.sleep(2)
         delete_button.click()
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
                                                              '-objects-page/lta-delete-dialog/lta-modal-layout/div'
@@ -1275,6 +1301,7 @@ class TestObject:
         delete_button_window = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
                                                                   '-objects-page/lta-delete-dialog/lta-modal-layout'
                                                                   '/div/lta-modal/div[2]/lta-btn[2]/button')
+        time.sleep(2)
         delete_button_window.click()
         wait.until(ec.invisibility_of_element_located((By.CLASS_NAME, 'btn.btn-icon.danger.md')))
         assert len(self.driver.find_elements(By.XPATH, "//*[contains(text(),'" + object_name + "')]")) == 0, 'Root ' \
@@ -1406,7 +1433,7 @@ class TestObject:
         objects_button = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside'
                                                             '/nav/ul/li[4]/a')
         objects_button.click()
-        wait.until(ec.url_to_be('http://185.221.152.176/conf/data/objects'))
+        wait.until(ec.url_to_be(f'{env_url}conf/data/objects'))
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'Directory')]")))
 
         object_name = 'AutoTest_Object'
@@ -1512,7 +1539,7 @@ class TestObject:
         models_button = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside'
                                                            '/nav/ul/li[5]/a')
         models_button.click()
-        wait.until(ec.url_to_be('http://185.221.152.176/conf/data/models'))
+        wait.until(ec.url_to_be(f'{env_url}conf/data/models'))
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div'
                                                              '/main/app-models-page/header-layout/div'
                                                              '/div[2]/aside-layout/div['
@@ -1530,6 +1557,7 @@ class TestObject:
                                                  '/html/body/app-root/app-admin-layout/div/main/app-models-page'
                                                  '/header-layout/div/div['
                                                  '1]/lta-header-panel/div/lta-empty-panel/div/lta-btn[2]/button')
+        time.sleep(2)
         delete_button.click()
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
                                                              '-models-page/lta-delete-dialog/lta-modal-layout/div/lta'
@@ -1537,6 +1565,7 @@ class TestObject:
         delete_button_window = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
                                                                   '-models-page/lta-delete-dialog/lta-modal-layout'
                                                                   '/div/lta-modal/div[2]/lta-btn[2]/button')
+        time.sleep(2)
         delete_button_window.click()
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app-models'
                                                              '-page/app-model-delete-options-dialog/lta-modal-layout'
@@ -1549,6 +1578,7 @@ class TestObject:
                                                                    '-models-page/app-model-delete-options-dialog/lta'
                                                                    '-modal-layout/div/lta-modal/div[2]/lta-btn['
                                                                    '1]/button')
+        time.sleep(2)
         delete_button_window1.click()
         wait.until(ec.invisibility_of_element_located((By.XPATH,
                                                        '/html/body/app-root/app-admin-layout/div/main/app-models-page'
@@ -1565,7 +1595,7 @@ class TestObject:
         objects_button = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside'
                                                             '/nav/ul/li[4]/a')
         objects_button.click()
-        wait.until(ec.url_to_be('http://185.221.152.176/conf/data/objects'))
+        wait.until(ec.url_to_be(f'{env_url}conf/data/objects'))
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'Directory')]")))
 
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'" + child_name + "')]")))
@@ -1578,6 +1608,7 @@ class TestObject:
 
         wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'btn.btn-icon.danger.md')))
         delete_button = self.driver.find_element(By.CLASS_NAME, 'btn.btn-icon.danger.md')
+        time.sleep(2)
         delete_button.click()
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
                                                              '-objects-page/lta-delete-dialog/lta-modal-layout/div'
@@ -1585,6 +1616,7 @@ class TestObject:
         delete_button_window = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
                                                                   '-objects-page/lta-delete-dialog/lta-modal-layout'
                                                                   '/div/lta-modal/div[2]/lta-btn[2]/button')
+        time.sleep(2)
         delete_button_window.click()
         wait.until(ec.invisibility_of_element_located((By.CLASS_NAME, 'btn.btn-icon.danger.md')))
         assert len(self.driver.find_elements(By.XPATH, "//*[contains(text(),'" + object_name + "')]")) == 0, 'Root ' \

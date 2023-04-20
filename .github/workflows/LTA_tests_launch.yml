@@ -9,6 +9,11 @@ on:
 permissions:
   contents: read
 
+env:
+    URL: 'http://cert1n1.apcs.io/'
+    USERNAME: 'admin'
+    PASSWORD: 'admin1'
+
 jobs:
   tests:
 

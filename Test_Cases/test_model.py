@@ -50,6 +50,7 @@ class TestModel:
         delete_button_window = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
                                                                   '-models-page/lta-delete-dialog/lta-modal-layout'
                                                                   '/div/lta-modal/div[2]/lta-btn[2]/button')
+        time.sleep(2)
         delete_button_window.click()
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app-models'
                                                          '-page/app-model-delete-options-dialog/lta-modal-layout/div'
@@ -61,6 +62,7 @@ class TestModel:
                                                                    '-models-page/app-model-delete-options-dialog/lta'
                                                                    '-modal-layout/div/lta-modal/div[2]/lta-btn['
                                                                    '2]/button')
+        time.sleep(2)
         delete_button_window1.click()
         wait.until(ec.invisibility_of_element_located((By.XPATH,
                                                        '/html/body/app-root/app-admin-layout/div/main/app-models-page'
@@ -173,6 +175,7 @@ class TestModel:
         delete_button_window = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
                                                                   '-models-page/lta-delete-dialog/lta-modal-layout'
                                                                   '/div/lta-modal/div[2]/lta-btn[2]/button')
+        time.sleep(2)
         delete_button_window.click()
         wait.until(ec.element_to_be_clickable((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app-models'
                                                          '-page/app-model-delete-options-dialog/lta-modal-layout/div'
@@ -181,6 +184,7 @@ class TestModel:
                                                                    '-models-page/app-model-delete-options-dialog/lta'
                                                                    '-modal-layout/div/lta-modal/div[2]/lta-btn['
                                                                    '2]/button')
+        time.sleep(2)
         delete_button_window1.click()
         wait.until(ec.invisibility_of_element_located((By.XPATH,
                                                        '/html/body/app-root/app-admin-layout/div/main/app-models-page'
@@ -276,6 +280,7 @@ class TestModel:
         delete_button_window = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
                                                                   '-models-page/lta-delete-dialog/lta-modal-layout'
                                                                   '/div/lta-modal/div[2]/lta-btn[2]/button')
+        time.sleep(2)
         delete_button_window.click()
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app-models'
                                                          '-page/app-model-delete-options-dialog/lta-modal-layout/div'
@@ -287,6 +292,7 @@ class TestModel:
                                                                    '-models-page/app-model-delete-options-dialog/lta'
                                                                    '-modal-layout/div/lta-modal/div[2]/lta-btn['
                                                                    '2]/button')
+        time.sleep(2)
         delete_button_window1.click()
         wait.until(ec.invisibility_of_element_located((By.XPATH,
                                                        '/html/body/app-root/app-admin-layout/div/main/app-models-page'
@@ -537,6 +543,7 @@ class TestModel:
                                                                                  '-modal-layout'
                                                                                  '/div/lta-modal/div[2]/lta-btn['
                                                                                  '2]/button')
+        time.sleep(2)
         delete_button_last_sub_model_window.click()
         wait.until(ec.invisibility_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
                                                                  '-models-page/header-layout/div/div['
@@ -565,6 +572,7 @@ class TestModel:
         delete_button_window = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
                                                                   '-models-page/lta-delete-dialog/lta-modal-layout'
                                                                   '/div/lta-modal/div[2]/lta-btn[2]/button')
+        time.sleep(2)
         delete_button_window.click()
         wait.until(ec.element_to_be_clickable((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app-models'
                                                          '-page/app-model-delete-options-dialog/lta-modal-layout/div'
@@ -573,6 +581,7 @@ class TestModel:
                                                                    '-models-page/app-model-delete-options-dialog/lta'
                                                                    '-modal-layout/div/lta-modal/div[2]/lta-btn['
                                                                    '2]/button')
+        time.sleep(2)
         delete_button_window1.click()
         wait.until(ec.invisibility_of_element_located((By.XPATH,
                                                        '/html/body/app-root/app-admin-layout/div/main/app-models-page'
@@ -687,6 +696,7 @@ class TestModel:
         delete_button_window = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
                                                                   '-models-page/lta-delete-dialog/lta-modal-layout'
                                                                   '/div/lta-modal/div[2]/lta-btn[2]/button')
+        time.sleep(2)
         delete_button_window.click()
         wait.until(ec.element_to_be_clickable((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app-models'
                                                          '-page/app-model-delete-options-dialog/lta-modal-layout/div'
@@ -695,6 +705,7 @@ class TestModel:
                                                                    '-models-page/app-model-delete-options-dialog/lta'
                                                                    '-modal-layout/div/lta-modal/div[2]/lta-btn['
                                                                    '2]/button')
+        time.sleep(2)
         delete_button_window1.click()
         wait.until(ec.invisibility_of_element_located((By.XPATH,
                                                        '/html/body/app-root/app-admin-layout/div/main/app-models-page'
