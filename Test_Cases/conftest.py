@@ -22,7 +22,7 @@ def get_chrome_options():
     options.add_argument('chrome')
     options.add_argument('--start-maximized')
     options.add_argument('--window-size=1920,1080')
-    #options.add_argument('--headless')
+    options.add_argument('--headless')
     return options
 
 
