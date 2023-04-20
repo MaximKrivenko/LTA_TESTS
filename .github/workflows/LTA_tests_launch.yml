@@ -35,10 +35,6 @@ jobs:
         pytest -s -v -p no:warnings --alluredir=allure-results
       continue-on-error: true
 
-    - name: Chown user
-      run: |
-        sudo chown -R $USER:$USER /home/runner/work/LTA_TESTS/
-
     - name: Get Allure history
       uses: actions/checkout@v2
       if: always()
