@@ -44,8 +44,8 @@ jobs:
     - name: Test with pytest
       if: always()
       run:
-        pytest -s -v -p no:warnings --alluredir=%allure_result_folder% ./tests
+        pytest -s -v -p no:warnings --alluredir=allure-report
       continue-on-error: true
     - name: Generate Allure results
       run:
-        allure serve %allure_result_folder%
+        allure serve allure-result
