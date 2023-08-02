@@ -1,4 +1,5 @@
 import pytest
+import allure
 import time
 import random
 import os
@@ -10,8 +11,13 @@ from selenium.webdriver.support.ui import WebDriverWait
 load_dotenv()
 env_url = os.getenv('URL')
 
+
 class TestObject:
+    print(f'TEST OBJECTS LAUNCHED ON {env_url}')
+
+    @allure.description("Проверка работоспособности раздела 'Объекты'")
     # simple root object test
+    @allure.title("Создание и удаление корневого объекта")
     def test_object(self, objects_page):
         print('Simple root object test launched...')
         self.driver = objects_page
@@ -38,6 +44,7 @@ class TestObject:
                                                          '2]/app-object-info-panel/div/div/form/lta-input/label/span['
                                                          '2]/input')
         object_name.send_keys(name)
+        time.sleep(1)
         models_choice = self.driver.find_element(By.CLASS_NAME, 'select__value.placeholder')
         models_choice.click()
         model_directory = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
@@ -72,15 +79,33 @@ class TestObject:
                                                                                                       'object ' \
                                                                                                       'was not deleted'
         print('Simple root object deleted')
-        self.driver.close()
+
+        time.sleep(2)
 
     # simple root object name validation test
-    def test_object1(self, objects_page):
+    @allure.description("Проверка работоспособности раздела 'Объекты'")
+    # simple root object test
+    @allure.title("Создание двух корневых объектов с одинаковыми именами, проверка и удаление")
+    def test_object1(self, get_webdriver):
         print('Simple root object name validation test launched...')
-        self.driver = objects_page
+        self.driver = get_webdriver
         name = 'AutoTest_Object'
         description = 'Тестовый объект'
         wait = WebDriverWait(self.driver, 15, 0.5)
+
+        current_url = self.driver.current_url
+        goal_url = f'{env_url}conf/data/objects'
+
+        if current_url != goal_url:
+            print(f'Current URL is {current_url}, need to return to the Objects section')
+            objects_button = self.driver.find_element(By.XPATH,
+                                                      '/html/body/app-root/app-admin-layout/div/app-menu/aside/nav/ul'
+                                                      '/li[5]/a')
+            objects_button.click()
+            wait.until(ec.url_to_be(f'{env_url}conf/data/objects'))
+            print('Objects section reached')
+        else:
+            pass
 
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'Directory')]")))
 
@@ -101,6 +126,7 @@ class TestObject:
                                                          '2]/app-object-info-panel/div/div/form/lta-input/label/span['
                                                          '2]/input')
         object_name.send_keys(name)
+        time.sleep(1)
         models_choice = self.driver.find_element(By.CLASS_NAME, 'select__value.placeholder')
         models_choice.click()
         model_directory = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
@@ -129,6 +155,7 @@ class TestObject:
                                                              '2]/app-object-info-panel/div/div/form/lta-input/label'
                                                              '/span[2]/input')))
         object_name.send_keys(name)
+        time.sleep(1)
         models_choice.click()
         model_directory = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
                                                              '-objects-page/header-layout/div/div['
@@ -174,15 +201,33 @@ class TestObject:
                                                                                                       'object ' \
                                                                                                       'was not deleted'
         print('First simple root object deleted')
-        self.driver.close()
+
+        time.sleep(2)
 
     # Complex root object test
-    def test_object2(self, objects_page):
+    @allure.description("Проверка работоспособности раздела 'Объекты'")
+    # simple root object test
+    @allure.title("Создание корневого объекта, добавление в него объекта по модели Directory, проверка и удаление корневого объекта")
+    def test_object2(self, get_webdriver):
         print('Complex root object test launched...')
-        self.driver = objects_page
+        self.driver = get_webdriver
         name = 'AutoTest_Object'
         description = 'Тестовый объект'
         wait = WebDriverWait(self.driver, 15, 0.5)
+
+        current_url = self.driver.current_url
+        goal_url = f'{env_url}conf/data/objects'
+
+        if current_url != goal_url:
+            print(f'Current URL is {current_url}, need to return to the Objects section')
+            objects_button = self.driver.find_element(By.XPATH,
+                                                      '/html/body/app-root/app-admin-layout/div/app-menu/aside/nav/ul'
+                                                      '/li[5]/a')
+            objects_button.click()
+            wait.until(ec.url_to_be(f'{env_url}conf/data/objects'))
+            print('Objects section reached')
+        else:
+            pass
 
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'Directory')]")))
 
@@ -203,6 +248,7 @@ class TestObject:
                                                          '2]/app-object-info-panel/div/div/form/lta-input/label/span['
                                                          '2]/input')
         object_name.send_keys(name)
+        time.sleep(1)
         models_choice = self.driver.find_element(By.CLASS_NAME, 'select__value.placeholder')
         models_choice.click()
         model_directory = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
@@ -220,6 +266,11 @@ class TestObject:
 
         self.driver.refresh()
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'Directory')]")))
+        chevron_right_button = self.driver.find_element(By.XPATH, "//*[contains(text(),"
+                                                                  "'" + name + "')]//parent::div//parent::div//child"
+                                                                               "::span//child::svg-icon")
+        chevron_right_button.click()
+
         wait.until(ec.visibility_of_element_located((By.XPATH, "//*[contains(text(),'" + name + "')]//parent"
                                                                                                 "::div//parent::div"
                                                                                                 "//parent::div//parent"
@@ -260,6 +311,7 @@ class TestObject:
                                                          '2]/app-object-info-panel/div/div/form/lta-input/label/span['
                                                          '2]/input')
         object_name.send_keys(child_name)
+        time.sleep(1)
         models_choice = self.driver.find_element(By.CLASS_NAME, 'select__value.placeholder')
         models_choice.click()
         model_directory = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
@@ -302,17 +354,37 @@ class TestObject:
                                                                                                       'object ' \
                                                                                                       'was not deleted'
         print('Complex root object deleted')
-        self.driver.close()
+
+        time.sleep(2)
 
     # complex root object child object name validation test
-    def test_object3(self, objects_page):
+    @allure.description("Проверка работоспособности раздела 'Объекты'")
+    # simple root object test
+    @allure.title("Создание корневого объекта, добавление в него объекта по модели Directory, добавление второго объекта по модели Directory с тем же именем, проверка и удаление корневого объекта")
+    def test_object3(self, get_webdriver):
         print('Complex root object child object name validation test launched...')
-        self.driver = objects_page
+        self.driver = get_webdriver
         name = 'AutoTest_Object'
         description = 'Тестовый объект'
         wait = WebDriverWait(self.driver, 15, 0.5)
 
+        current_url = self.driver.current_url
+        goal_url = f'{env_url}conf/data/objects'
+
+        if current_url != goal_url:
+            print(f'Current URL is {current_url}, need to return to the Objects section')
+            objects_button = self.driver.find_element(By.XPATH,
+                                                      '/html/body/app-root/app-admin-layout/div/app-menu/aside/nav/ul'
+                                                      '/li[5]/a')
+            objects_button.click()
+            wait.until(ec.url_to_be(f'{env_url}conf/data/objects'))
+            print('Objects section reached')
+        else:
+            pass
+
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'Directory')]")))
+
+        self.driver.refresh()
 
         same_objects = len(self.driver.find_elements(By.XPATH, "//*[contains(text(),'" + name + "')]"))
         while same_objects != 0:
@@ -331,6 +403,7 @@ class TestObject:
                                                          '2]/app-object-info-panel/div/div/form/lta-input/label/span['
                                                          '2]/input')
         object_name.send_keys(name)
+        time.sleep(1)
         models_choice = self.driver.find_element(By.CLASS_NAME, 'select__value.placeholder')
         models_choice.click()
         model_directory = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
@@ -348,6 +421,10 @@ class TestObject:
 
         self.driver.refresh()
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'Directory')]")))
+        chevron_right_button = self.driver.find_element(By.XPATH, "//*[contains(text(),"
+                                                                  "'" + name + "')]//parent::div//parent::div//child"
+                                                                               "::span//child::svg-icon")
+        chevron_right_button.click()
         wait.until(ec.visibility_of_element_located((By.XPATH, "//*[contains(text(),'" + name + "')]//parent"
                                                                                                 "::div//parent::div"
                                                                                                 "//parent::div//parent"
@@ -392,6 +469,7 @@ class TestObject:
                                                          '2]/app-object-info-panel/div/div/form/lta-input/label/span['
                                                          '2]/input')
         object_name.send_keys(child_name)
+        time.sleep(1)
         models_choice = self.driver.find_element(By.CLASS_NAME, 'select__value.placeholder')
         models_choice.click()
         model_directory = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
@@ -449,6 +527,7 @@ class TestObject:
                                                          '2]/app-object-info-panel/div/div/form/lta-input/label/span['
                                                          '2]/input')
         object_name.send_keys(child_name)
+        time.sleep(1)
         models_choice = self.driver.find_element(By.CLASS_NAME, 'select__value.placeholder')
         models_choice.click()
         model_directory = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
@@ -491,17 +570,36 @@ class TestObject:
                                                                                                       'was not deleted'
         print('Complex root object deleted')
 
-        self.driver.close()
+        time.sleep(2)
 
     # complex root object child object deleting test
-    def test_object4(self, objects_page):
+    @allure.description("Проверка работоспособности раздела 'Объекты'")
+    # simple root object test
+    @allure.title("Создание корневого объекта, добавление в него двух объектов по модели Directory с уникальными именами. Удаление одного дочернего объекта, проверка. Удаление корневого объекта")
+    def test_object4(self, get_webdriver):
         print('Complex root object child object deleting test launched...')
-        self.driver = objects_page
+        self.driver = get_webdriver
         name = 'AutoTest_Object'
         description = 'Тестовый объект'
         wait = WebDriverWait(self.driver, 15, 0.5)
 
+        current_url = self.driver.current_url
+        goal_url = f'{env_url}conf/data/objects'
+
+        if current_url != goal_url:
+            print(f'Current URL is {current_url}, need to return to the Objects section')
+            objects_button = self.driver.find_element(By.XPATH,
+                                                      '/html/body/app-root/app-admin-layout/div/app-menu/aside/nav/ul'
+                                                      '/li[5]/a')
+            objects_button.click()
+            wait.until(ec.url_to_be(f'{env_url}conf/data/objects'))
+            print('Objects section reached')
+        else:
+            pass
+
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'Directory')]")))
+
+        self.driver.refresh()
 
         same_objects = len(self.driver.find_elements(By.XPATH, "//*[contains(text(),'" + name + "')]"))
         while same_objects != 0:
@@ -520,6 +618,7 @@ class TestObject:
                                                          '2]/app-object-info-panel/div/div/form/lta-input/label/span['
                                                          '2]/input')
         object_name.send_keys(name)
+        time.sleep(1)
         models_choice = self.driver.find_element(By.CLASS_NAME, 'select__value.placeholder')
         models_choice.click()
         model_directory = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
@@ -537,6 +636,10 @@ class TestObject:
 
         self.driver.refresh()
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'Directory')]")))
+        chevron_right_button = self.driver.find_element(By.XPATH, "//*[contains(text(),"
+                                                                  "'" + name + "')]//parent::div//parent::div//child"
+                                                                               "::span//child::svg-icon")
+        chevron_right_button.click()
         wait.until(ec.visibility_of_element_located((By.XPATH, "//*[contains(text(),'" + name + "')]//parent"
                                                                                                 "::div//parent::div"
                                                                                                 "//parent::div//parent"
@@ -578,6 +681,7 @@ class TestObject:
                                                          '2]/app-object-info-panel/div/div/form/lta-input/label/span['
                                                          '2]/input')
         object_name.send_keys(child_name_1)
+        time.sleep(1)
         models_choice = self.driver.find_element(By.CLASS_NAME, 'select__value.placeholder')
         models_choice.click()
         model_directory = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
@@ -631,6 +735,7 @@ class TestObject:
                                                          '2]/app-object-info-panel/div/div/form/lta-input/label/span['
                                                          '2]/input')
         object_name.send_keys(child_name_2)
+        time.sleep(1)
         models_choice = self.driver.find_element(By.CLASS_NAME, 'select__value.placeholder')
         models_choice.click()
         model_directory = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
@@ -688,12 +793,20 @@ class TestObject:
                                                                                                       'object ' \
                                                                                                       'was not deleted'
         print('Complex root object deleted')
-        self.driver.close()
 
     # model-object simple test
-    def test_object5(self, models_page):
+    @allure.description("Проверка работоспособности раздела 'Объекты'")
+    # simple root object test
+    @allure.title("Создание модели, содержащей подмодели. Создание корневого объекта по модели Directory. Добавление в него объекта по созданной модели. Проверка и удаление объекта. Удаление модели.")
+    def test_object5(self, get_webdriver):
         print('Model-Object simple test launched...')
-        self.driver = models_page
+        self.driver = get_webdriver
+
+        models_button = self.driver.find_element(By.XPATH,
+                                                 '/html/body/app-root/app-admin-layout/div/app-menu/aside/nav/ul/li['
+                                                 '4]/a')
+        models_button.click()
+
         model_name = 'AutoTest_Model'
         model_description = 'Тестовая модель'
         wait = WebDriverWait(self.driver, 15, 0.5)
@@ -709,8 +822,14 @@ class TestObject:
 
         button_create_model = self.driver.find_element(By.CLASS_NAME, 'btn.btn-icon.primary.md')
         button_create_model.click()
-        wait.until(ec.presence_of_element_located((By.XPATH, "//input[@class='classes']")))
-        model_name_input = self.driver.find_element(By.XPATH, "//input[@class='classes']")
+        wait.until(ec.presence_of_element_located((By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
+                                                             "-models-page/header-layout/div/div[2]/aside-layout/div["
+                                                             "2]/app-models-info-panel/form/div/form/lta-input/label"
+                                                             "/span[2]/input")))
+        model_name_input = self.driver.find_element(By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
+                                                              "-models-page/header-layout/div/div[2]/aside-layout/div["
+                                                              "2]/app-models-info-panel/form/div/form/lta-input/label"
+                                                              "/span[2]/input")
         model_name_input.send_keys(model_name)
         model_description_input = self.driver.find_element(By.CLASS_NAME, 'textarea.sm')
         model_description_input.send_keys(model_description)
@@ -733,8 +852,14 @@ class TestObject:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
         sub_model_button = self.driver.find_element(By.XPATH, "//*[contains(text(),' Новая модель ')]")
         sub_model_button.click()
-        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'classes.error')))
-        sub_model_name = self.driver.find_element(By.CLASS_NAME, 'classes.error')
+        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app-models'
+                                                             '-page/header-layout/div/div[2]/aside-layout/div['
+                                                             '2]/app-models-info-panel/form/div/form/lta-input/label'
+                                                             '/span[2]/input')))
+        sub_model_name = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app-models'
+                                                            '-page/header-layout/div/div[2]/aside-layout/div['
+                                                            '2]/app-models-info-panel/form/div/form/lta-input/label'
+                                                            '/span[2]/input')
         sub_model_name.send_keys('Test_boolean')
         sub_model_description = self.driver.find_element(By.CLASS_NAME, 'textarea.sm')
         sub_model_description.send_keys('Дочерняя модель по модели Boolean')
@@ -754,7 +879,10 @@ class TestObject:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
         sub_model_button = self.driver.find_element(By.XPATH, "//*[contains(text(),' Новая модель ')]")
         sub_model_button.click()
-        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'classes.error')))
+        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app-models'
+                                                             '-page/header-layout/div/div[2]/aside-layout/div['
+                                                             '2]/app-models-info-panel/form/div/form/lta-input/label'
+                                                             '/span[2]/input')))
         sub_model_name.send_keys('Test_directory')
         sub_model_description.send_keys('Дочерняя модель по модели Directory')
         models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
@@ -772,7 +900,10 @@ class TestObject:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
         sub_model_button = self.driver.find_element(By.XPATH, "//*[contains(text(),' Новая модель ')]")
         sub_model_button.click()
-        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'classes.error')))
+        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app-models'
+                                                             '-page/header-layout/div/div[2]/aside-layout/div['
+                                                             '2]/app-models-info-panel/form/div/form/lta-input/label'
+                                                             '/span[2]/input')))
         sub_model_name.send_keys('Test_float')
         sub_model_description.send_keys('Дочерняя модель по модели Float')
         models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
@@ -790,7 +921,10 @@ class TestObject:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
         sub_model_button = self.driver.find_element(By.XPATH, "//*[contains(text(),' Новая модель ')]")
         sub_model_button.click()
-        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'classes.error')))
+        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app-models'
+                                                             '-page/header-layout/div/div[2]/aside-layout/div['
+                                                             '2]/app-models-info-panel/form/div/form/lta-input/label'
+                                                             '/span[2]/input')))
         sub_model_name.send_keys('Test_string')
         sub_model_description.send_keys('Дочерняя модель по модели String')
         models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
@@ -807,10 +941,12 @@ class TestObject:
         print('Child model string created')
         print('Test model created')
 
-        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside'
-                                                             '/nav/ul/li[4]/a')))
-        objects_button = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside'
-                                                            '/nav/ul/li[4]/a')
+        wait.until(
+            ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside/nav/ul'
+                                                      '/li[5]/a')))
+        objects_button = self.driver.find_element(By.XPATH,
+                                                  '/html/body/app-root/app-admin-layout/div/app-menu/aside/nav/ul'
+                                                  '/li[5]/a')
         objects_button.click()
         wait.until(ec.url_to_be(f'{env_url}conf/data/objects'))
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'Directory')]")))
@@ -837,6 +973,7 @@ class TestObject:
                                                                '/span['
                                                                '2]/input')
         object_name_input.send_keys(object_name)
+        time.sleep(1)
         models_choice = self.driver.find_element(By.CLASS_NAME, 'select__value.placeholder')
         models_choice.click()
         model_directory = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
@@ -855,32 +992,36 @@ class TestObject:
 
         self.driver.refresh()
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'Directory')]")))
+        chevron_right_button = self.driver.find_element(By.XPATH, "//*[contains(text(),"
+                                                                  "'" + object_name + "')]//parent::div//parent::div//child"
+                                                                               "::span//child::svg-icon")
+        chevron_right_button.click()
         wait.until(ec.visibility_of_element_located((By.XPATH, "//*[contains(text(),'" + object_name + "')]//parent"
-                                                                                                "::div//parent::div"
-                                                                                                "//parent::div//parent"
-                                                                                                "::node-name//parent"
-                                                                                                "::div[1]//parent"
-                                                                                                "::div//child::div["
-                                                                                                "2]//child::div//child"
-                                                                                                "::node//child::div"
-                                                                                                "//child::div[1]//child"
-                                                                                                "::node-name//child"
-                                                                                                "::div//child::div"
-                                                                                                "//child::div//child"
+                                                                                                       "::div//parent::div"
+                                                                                                       "//parent::div//parent"
+                                                                                                       "::node-name//parent"
+                                                                                                       "::div[1]//parent"
+                                                                                                       "::div//child::div["
+                                                                                                       "2]//child::div//child"
+                                                                                                       "::node//child::div"
+                                                                                                       "//child::div[1]//child"
+                                                                                                       "::node-name//child"
+                                                                                                       "::div//child::div"
+                                                                                                       "//child::div//child"
                                                                                                        "::div")))
         create_child_object_button = self.driver.find_element(By.XPATH,
                                                               "//*[contains(text(),'" + object_name + "')]//parent"
-                                                                                                "::div//parent::div"
-                                                                                                "//parent::div//parent"
-                                                                                                "::node-name//parent"
-                                                                                                "::div[1]//parent"
-                                                                                                "::div//child::div["
-                                                                                                "2]//child::div//child"
-                                                                                                "::node//child::div"
-                                                                                                "//child::div[1]//child"
-                                                                                                "::node-name//child"
-                                                                                                "::div//child::div"
-                                                                                                "//child::div//child"
+                                                                                                      "::div//parent::div"
+                                                                                                      "//parent::div//parent"
+                                                                                                      "::node-name//parent"
+                                                                                                      "::div[1]//parent"
+                                                                                                      "::div//child::div["
+                                                                                                      "2]//child::div//child"
+                                                                                                      "::node//child::div"
+                                                                                                      "//child::div[1]//child"
+                                                                                                      "::node-name//child"
+                                                                                                      "::div//child::div"
+                                                                                                      "//child::div//child"
                                                                                                       "::div")
         create_child_object_button.click()
         child_name = 'Child_test_object'
@@ -897,6 +1038,7 @@ class TestObject:
                                                                '/span['
                                                                '2]/input')
         object_name_input.send_keys(child_name)
+        time.sleep(1)
         models_choice = self.driver.find_element(By.CLASS_NAME, 'select__value.placeholder')
         models_choice.click()
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'" + model_name + "')]")))
@@ -933,15 +1075,17 @@ class TestObject:
         delete_button_window.click()
         wait.until(ec.invisibility_of_element_located((By.CLASS_NAME, 'btn.btn-icon.danger.md')))
         assert len(self.driver.find_elements(By.XPATH, "//*[contains(text(),'" + object_name + "')]")) == 0, 'Root ' \
-                                                                                                            'object ' \
-                                                                                                            'was not ' \
-                                                                                                            'deleted'
+                                                                                                             'object ' \
+                                                                                                             'was not ' \
+                                                                                                             'deleted'
         print('Root object deleted')
 
-        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside'
-                                                             '/nav/ul/li[5]/a')))
-        models_button = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside'
-                                                           '/nav/ul/li[5]/a')
+        wait.until(ec.presence_of_element_located(
+            (By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside/nav/ul/li['
+                       '4]/a')))
+        models_button = self.driver.find_element(By.XPATH,
+                                                 '/html/body/app-root/app-admin-layout/div/app-menu/aside/nav/ul/li['
+                                                 '4]/a')
         models_button.click()
         wait.until(ec.url_to_be(f'{env_url}conf/data/models'))
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div'
@@ -993,12 +1137,20 @@ class TestObject:
                                                                                                             'was not ' \
                                                                                                             'deleted'
         print('Test model deleted')
-        self.driver.close()
 
     # model-object delete model with deleting object test
-    def test_object6(self, models_page):
+    @allure.description("Проверка работоспособности раздела 'Объекты'")
+    # simple root object test
+    @allure.title("Создание модели, содержаей подмодели. Создание корневого объекта по модели Directory. Добавление в него объекта по созданой модели. Проверка объекта. Удаление модели с удалением объекта. Проверка факта удаления объекта. Удаление корневого объекта.")
+    def test_object6(self, get_webdriver):
         print('Model-Object delete model with deleting object test launched...')
-        self.driver = models_page
+        self.driver = get_webdriver
+
+        models_button = self.driver.find_element(By.XPATH,
+                                                 '/html/body/app-root/app-admin-layout/div/app-menu/aside/nav/ul/li['
+                                                 '4]/a')
+        models_button.click()
+
         model_name = 'AutoTest_Model'
         model_description = 'Тестовая модель'
         wait = WebDriverWait(self.driver, 15, 0.5)
@@ -1014,8 +1166,14 @@ class TestObject:
 
         button_create_model = self.driver.find_element(By.CLASS_NAME, 'btn.btn-icon.primary.md')
         button_create_model.click()
-        wait.until(ec.presence_of_element_located((By.XPATH, "//input[@class='classes']")))
-        model_name_input = self.driver.find_element(By.XPATH, "//input[@class='classes']")
+        wait.until(ec.presence_of_element_located((By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
+                                                             "-models-page/header-layout/div/div[2]/aside-layout/div["
+                                                             "2]/app-models-info-panel/form/div/form/lta-input/label"
+                                                             "/span[2]/input")))
+        model_name_input = self.driver.find_element(By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
+                                                             "-models-page/header-layout/div/div[2]/aside-layout/div["
+                                                             "2]/app-models-info-panel/form/div/form/lta-input/label"
+                                                             "/span[2]/input")
         model_name_input.send_keys(model_name)
         model_description_input = self.driver.find_element(By.CLASS_NAME, 'textarea.sm')
         model_description_input.send_keys(model_description)
@@ -1038,8 +1196,14 @@ class TestObject:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
         sub_model_button = self.driver.find_element(By.XPATH, "//*[contains(text(),' Новая модель ')]")
         sub_model_button.click()
-        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'classes.error')))
-        sub_model_name = self.driver.find_element(By.CLASS_NAME, 'classes.error')
+        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
+                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
+                                                             '2]/app-models-info-panel/form/div/form/lta-input/label'
+                                                             '/span[2]/input')))
+        sub_model_name = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
+                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
+                                                             '2]/app-models-info-panel/form/div/form/lta-input/label'
+                                                             '/span[2]/input')
         sub_model_name.send_keys('Test_boolean')
         sub_model_description = self.driver.find_element(By.CLASS_NAME, 'textarea.sm')
         sub_model_description.send_keys('Дочерняя модель по модели Boolean')
@@ -1059,7 +1223,10 @@ class TestObject:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
         sub_model_button = self.driver.find_element(By.XPATH, "//*[contains(text(),' Новая модель ')]")
         sub_model_button.click()
-        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'classes.error')))
+        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
+                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
+                                                             '2]/app-models-info-panel/form/div/form/lta-input/label'
+                                                             '/span[2]/input')))
         sub_model_name.send_keys('Test_directory')
         sub_model_description.send_keys('Дочерняя модель по модели Directory')
         models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
@@ -1077,7 +1244,10 @@ class TestObject:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
         sub_model_button = self.driver.find_element(By.XPATH, "//*[contains(text(),' Новая модель ')]")
         sub_model_button.click()
-        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'classes.error')))
+        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
+                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
+                                                             '2]/app-models-info-panel/form/div/form/lta-input/label'
+                                                             '/span[2]/input')))
         sub_model_name.send_keys('Test_float')
         sub_model_description.send_keys('Дочерняя модель по модели Float')
         models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
@@ -1095,7 +1265,10 @@ class TestObject:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
         sub_model_button = self.driver.find_element(By.XPATH, "//*[contains(text(),' Новая модель ')]")
         sub_model_button.click()
-        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'classes.error')))
+        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
+                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
+                                                             '2]/app-models-info-panel/form/div/form/lta-input/label'
+                                                             '/span[2]/input')))
         sub_model_name.send_keys('Test_string')
         sub_model_description.send_keys('Дочерняя модель по модели String')
         models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
@@ -1112,10 +1285,10 @@ class TestObject:
         print('Child model string created')
         print('Test model created')
 
-        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside'
-                                                             '/nav/ul/li[4]/a')))
-        objects_button = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside'
-                                                            '/nav/ul/li[4]/a')
+        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside/nav/ul'
+                                                   '/li[5]/a')))
+        objects_button = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside/nav/ul'
+                                                   '/li[5]/a')
         objects_button.click()
         wait.until(ec.url_to_be(f'{env_url}conf/data/objects'))
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'Directory')]")))
@@ -1142,6 +1315,7 @@ class TestObject:
                                                                '/span['
                                                                '2]/input')
         object_name_input.send_keys(object_name)
+        time.sleep(1)
         models_choice = self.driver.find_element(By.CLASS_NAME, 'select__value.placeholder')
         models_choice.click()
         model_directory = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
@@ -1160,32 +1334,38 @@ class TestObject:
 
         self.driver.refresh()
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'Directory')]")))
+
+        chevron_right_button = self.driver.find_element(By.XPATH, "//*[contains(text(),"
+                                                                  "'" + object_name + "')]//parent::div//parent::div//child"
+                                                                                      "::span//child::svg-icon")
+        chevron_right_button.click()
+
         wait.until(ec.visibility_of_element_located((By.XPATH, "//*[contains(text(),'" + object_name + "')]//parent"
-                                                                                                "::div//parent::div"
-                                                                                                "//parent::div//parent"
-                                                                                                "::node-name//parent"
-                                                                                                "::div[1]//parent"
-                                                                                                "::div//child::div["
-                                                                                                "2]//child::div//child"
-                                                                                                "::node//child::div"
-                                                                                                "//child::div[1]//child"
-                                                                                                "::node-name//child"
-                                                                                                "::div//child::div"
-                                                                                                "//child::div//child"
+                                                                                                       "::div//parent::div"
+                                                                                                       "//parent::div//parent"
+                                                                                                       "::node-name//parent"
+                                                                                                       "::div[1]//parent"
+                                                                                                       "::div//child::div["
+                                                                                                       "2]//child::div//child"
+                                                                                                       "::node//child::div"
+                                                                                                       "//child::div[1]//child"
+                                                                                                       "::node-name//child"
+                                                                                                       "::div//child::div"
+                                                                                                       "//child::div//child"
                                                                                                        "::div")))
         create_child_object_button = self.driver.find_element(By.XPATH,
                                                               "//*[contains(text(),'" + object_name + "')]//parent"
-                                                                                                "::div//parent::div"
-                                                                                                "//parent::div//parent"
-                                                                                                "::node-name//parent"
-                                                                                                "::div[1]//parent"
-                                                                                                "::div//child::div["
-                                                                                                "2]//child::div//child"
-                                                                                                "::node//child::div"
-                                                                                                "//child::div[1]//child"
-                                                                                                "::node-name//child"
-                                                                                                "::div//child::div"
-                                                                                                "//child::div//child"
+                                                                                                      "::div//parent::div"
+                                                                                                      "//parent::div//parent"
+                                                                                                      "::node-name//parent"
+                                                                                                      "::div[1]//parent"
+                                                                                                      "::div//child::div["
+                                                                                                      "2]//child::div//child"
+                                                                                                      "::node//child::div"
+                                                                                                      "//child::div[1]//child"
+                                                                                                      "::node-name//child"
+                                                                                                      "::div//child::div"
+                                                                                                      "//child::div//child"
                                                                                                       "::div")
         create_child_object_button.click()
         child_name = 'Child_test_object'
@@ -1202,6 +1382,7 @@ class TestObject:
                                                                '/span['
                                                                '2]/input')
         object_name_input.send_keys(child_name)
+        time.sleep(1)
         models_choice = self.driver.find_element(By.CLASS_NAME, 'select__value.placeholder')
         models_choice.click()
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'" + model_name + "')]")))
@@ -1219,9 +1400,9 @@ class TestObject:
         print(f'Root object has child object with {model_name} model')
 
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside'
-                                                             '/nav/ul/li[5]/a')))
+                                                             '/nav/ul/li[4]/a')))
         models_button = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside'
-                                                           '/nav/ul/li[5]/a')
+                                                           '/nav/ul/li[4]/a')
         models_button.click()
         wait.until(ec.url_to_be(f'{env_url}conf/data/models'))
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div'
@@ -1275,9 +1456,9 @@ class TestObject:
         print('Test model deleted')
 
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside'
-                                                             '/nav/ul/li[4]/a')))
+                                                             '/nav/ul/li[5]/a')))
         objects_button = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside'
-                                                            '/nav/ul/li[4]/a')
+                                                            '/nav/ul/li[5]/a')
         objects_button.click()
         wait.until(ec.url_to_be(f'{env_url}conf/data/objects'))
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'Directory')]")))
@@ -1309,12 +1490,22 @@ class TestObject:
                                                                                                              'was not ' \
                                                                                                              'deleted'
         print('Root object deleted')
-        self.driver.close()
+
+        time.sleep(2)
 
     # model-object delete model with keeping object test
-    def test_object7(self, models_page):
+    @allure.description("Проверка работоспособности раздела 'Объекты'")
+    # simple root object test
+    @allure.title("Создание модели, содержащей подмодели. Создание корневого объекта по модели Directory. Добавление в него объекта по созданной модели. Проверка объекта. Удаление модели с отвязкой объекта. Проверка факта сохранения объекта и изменения типа модели на Directory. Удаление корневого объекта.")
+    def test_object7(self, get_webdriver):
         print('Model-Object delete model with keeping object test launched...')
-        self.driver = models_page
+        self.driver = get_webdriver
+
+        models_button = self.driver.find_element(By.XPATH,
+                                                 '/html/body/app-root/app-admin-layout/div/app-menu/aside/nav/ul/li['
+                                                 '4]/a')
+        models_button.click()
+
         model_name = 'AutoTest_Model'
         model_description = 'Тестовая модель'
         wait = WebDriverWait(self.driver, 15, 0.5)
@@ -1330,8 +1521,14 @@ class TestObject:
 
         button_create_model = self.driver.find_element(By.CLASS_NAME, 'btn.btn-icon.primary.md')
         button_create_model.click()
-        wait.until(ec.presence_of_element_located((By.XPATH, "//input[@class='classes']")))
-        model_name_input = self.driver.find_element(By.XPATH, "//input[@class='classes']")
+        wait.until(ec.presence_of_element_located((By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
+                                                             "-models-page/header-layout/div/div[2]/aside-layout/div["
+                                                             "2]/app-models-info-panel/form/div/form/lta-input/label"
+                                                             "/span[2]/input")))
+        model_name_input = self.driver.find_element(By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
+                                                             "-models-page/header-layout/div/div[2]/aside-layout/div["
+                                                             "2]/app-models-info-panel/form/div/form/lta-input/label"
+                                                             "/span[2]/input")
         model_name_input.send_keys(model_name)
         model_description_input = self.driver.find_element(By.CLASS_NAME, 'textarea.sm')
         model_description_input.send_keys(model_description)
@@ -1354,8 +1551,14 @@ class TestObject:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
         sub_model_button = self.driver.find_element(By.XPATH, "//*[contains(text(),' Новая модель ')]")
         sub_model_button.click()
-        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'classes.error')))
-        sub_model_name = self.driver.find_element(By.CLASS_NAME, 'classes.error')
+        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
+                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
+                                                             '2]/app-models-info-panel/form/div/form/lta-input/label'
+                                                             '/span[2]/input')))
+        sub_model_name = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
+                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
+                                                             '2]/app-models-info-panel/form/div/form/lta-input/label'
+                                                             '/span[2]/input')
         sub_model_name.send_keys('Test_boolean')
         sub_model_description = self.driver.find_element(By.CLASS_NAME, 'textarea.sm')
         sub_model_description.send_keys('Дочерняя модель по модели Boolean')
@@ -1375,7 +1578,10 @@ class TestObject:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
         sub_model_button = self.driver.find_element(By.XPATH, "//*[contains(text(),' Новая модель ')]")
         sub_model_button.click()
-        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'classes.error')))
+        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
+                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
+                                                             '2]/app-models-info-panel/form/div/form/lta-input/label'
+                                                             '/span[2]/input')))
         sub_model_name.send_keys('Test_directory')
         sub_model_description.send_keys('Дочерняя модель по модели Directory')
         models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
@@ -1393,7 +1599,10 @@ class TestObject:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
         sub_model_button = self.driver.find_element(By.XPATH, "//*[contains(text(),' Новая модель ')]")
         sub_model_button.click()
-        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'classes.error')))
+        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
+                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
+                                                             '2]/app-models-info-panel/form/div/form/lta-input/label'
+                                                             '/span[2]/input')))
         sub_model_name.send_keys('Test_float')
         sub_model_description.send_keys('Дочерняя модель по модели Float')
         models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
@@ -1411,7 +1620,10 @@ class TestObject:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
         sub_model_button = self.driver.find_element(By.XPATH, "//*[contains(text(),' Новая модель ')]")
         sub_model_button.click()
-        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'classes.error')))
+        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
+                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
+                                                             '2]/app-models-info-panel/form/div/form/lta-input/label'
+                                                             '/span[2]/input')))
         sub_model_name.send_keys('Test_string')
         sub_model_description.send_keys('Дочерняя модель по модели String')
         models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
@@ -1428,10 +1640,10 @@ class TestObject:
         print('Child model string created')
         print('Test model created')
 
-        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside'
-                                                             '/nav/ul/li[4]/a')))
-        objects_button = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside'
-                                                            '/nav/ul/li[4]/a')
+        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside/nav/ul'
+                                                   '/li[5]/a')))
+        objects_button = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside/nav/ul'
+                                                   '/li[5]/a')
         objects_button.click()
         wait.until(ec.url_to_be(f'{env_url}conf/data/objects'))
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'Directory')]")))
@@ -1458,6 +1670,7 @@ class TestObject:
                                                                '/span['
                                                                '2]/input')
         object_name_input.send_keys(object_name)
+        time.sleep(1)
         models_choice = self.driver.find_element(By.CLASS_NAME, 'select__value.placeholder')
         models_choice.click()
         model_directory = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
@@ -1476,32 +1689,38 @@ class TestObject:
 
         self.driver.refresh()
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'Directory')]")))
+
+        chevron_right_button = self.driver.find_element(By.XPATH, "//*[contains(text(),"
+                                                                  "'" + object_name + "')]//parent::div//parent::div//child"
+                                                                                      "::span//child::svg-icon")
+        chevron_right_button.click()
+
         wait.until(ec.visibility_of_element_located((By.XPATH, "//*[contains(text(),'" + object_name + "')]//parent"
-                                                                                                "::div//parent::div"
-                                                                                                "//parent::div//parent"
-                                                                                                "::node-name//parent"
-                                                                                                "::div[1]//parent"
-                                                                                                "::div//child::div["
-                                                                                                "2]//child::div//child"
-                                                                                                "::node//child::div"
-                                                                                                "//child::div[1]//child"
-                                                                                                "::node-name//child"
-                                                                                                "::div//child::div"
-                                                                                                "//child::div//child"
+                                                                                                       "::div//parent::div"
+                                                                                                       "//parent::div//parent"
+                                                                                                       "::node-name//parent"
+                                                                                                       "::div[1]//parent"
+                                                                                                       "::div//child::div["
+                                                                                                       "2]//child::div//child"
+                                                                                                       "::node//child::div"
+                                                                                                       "//child::div[1]//child"
+                                                                                                       "::node-name//child"
+                                                                                                       "::div//child::div"
+                                                                                                       "//child::div//child"
                                                                                                        "::div")))
         create_child_object_button = self.driver.find_element(By.XPATH,
                                                               "//*[contains(text(),'" + object_name + "')]//parent"
-                                                                                                "::div//parent::div"
-                                                                                                "//parent::div//parent"
-                                                                                                "::node-name//parent"
-                                                                                                "::div[1]//parent"
-                                                                                                "::div//child::div["
-                                                                                                "2]//child::div//child"
-                                                                                                "::node//child::div"
-                                                                                                "//child::div[1]//child"
-                                                                                                "::node-name//child"
-                                                                                                "::div//child::div"
-                                                                                                "//child::div//child"
+                                                                                                      "::div//parent::div"
+                                                                                                      "//parent::div//parent"
+                                                                                                      "::node-name//parent"
+                                                                                                      "::div[1]//parent"
+                                                                                                      "::div//child::div["
+                                                                                                      "2]//child::div//child"
+                                                                                                      "::node//child::div"
+                                                                                                      "//child::div[1]//child"
+                                                                                                      "::node-name//child"
+                                                                                                      "::div//child::div"
+                                                                                                      "//child::div//child"
                                                                                                       "::div")
         create_child_object_button.click()
         child_name = 'Child_test_object'
@@ -1518,6 +1737,7 @@ class TestObject:
                                                                '/span['
                                                                '2]/input')
         object_name_input.send_keys(child_name)
+        time.sleep(1)
         models_choice = self.driver.find_element(By.CLASS_NAME, 'select__value.placeholder')
         models_choice.click()
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'" + model_name + "')]")))
@@ -1535,9 +1755,9 @@ class TestObject:
         print(f'Root object has child object with {model_name} model')
 
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside'
-                                                             '/nav/ul/li[5]/a')))
+                                                             '/nav/ul/li[4]/a')))
         models_button = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside'
-                                                           '/nav/ul/li[5]/a')
+                                                           '/nav/ul/li[4]/a')
         models_button.click()
         wait.until(ec.url_to_be(f'{env_url}conf/data/models'))
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div'
@@ -1591,12 +1811,17 @@ class TestObject:
         print('Test model deleted')
 
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside'
-                                                             '/nav/ul/li[4]/a')))
+                                                             '/nav/ul/li[5]/a')))
         objects_button = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside'
-                                                            '/nav/ul/li[4]/a')
+                                                            '/nav/ul/li[5]/a')
         objects_button.click()
         wait.until(ec.url_to_be(f'{env_url}conf/data/objects'))
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'Directory')]")))
+
+        chevron_right_button = self.driver.find_element(By.XPATH, "//*[contains(text(),"
+                                                                  "'" + object_name + "')]//parent::div//parent::div//child"
+                                                                                      "::span//child::svg-icon")
+        chevron_right_button.click()
 
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'" + child_name + "')]")))
         child_untied_object = self.driver.find_element(By.XPATH, "//*[contains(text(),'" + child_name + "')]")
@@ -1624,5 +1849,5 @@ class TestObject:
                                                                                                              'was not ' \
                                                                                                              'deleted'
         print('Root object deleted')
-        self.driver.close()
 
+        self.driver.quit()

@@ -2,6 +2,7 @@ import time
 
 import pytest
 import os
+import allure
 from dotenv import load_dotenv
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
@@ -16,7 +17,8 @@ env_url = os.getenv('URL')
 env_username = os.getenv('USERNAME')
 env_password = os.getenv('PASSWORD')
 
-@pytest.fixture
+
+@pytest.fixture(scope='session', autouse=True)
 def get_chrome_options():
     options = chrome_options()
     options.add_argument('chrome')
@@ -26,22 +28,22 @@ def get_chrome_options():
     return options
 
 
-@pytest.fixture
+@pytest.fixture(scope='session')
 def get_webdriver(request, get_chrome_options):
     options = get_chrome_options
     driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
-    request.cls.driver = driver
+    #request.cls.driver = driver
     return driver
 
 
-@pytest.fixture
+@pytest.fixture(scope='session')
 def setup(get_webdriver):
     driver = get_webdriver
     driver.get(env_url)
     return driver
 
 
-@pytest.fixture(scope='function')
+@pytest.fixture(scope='session')
 def authorization(setup):
     driver = setup
     username = driver.find_element(By.XPATH,
@@ -60,7 +62,8 @@ def authorization(setup):
     print('LOG IN SUCCESS')
     return driver
 
-@pytest.fixture(scope='function')
+
+@pytest.fixture(scope='session')
 def authorization1(setup):
     driver = setup
     username = driver.find_element(By.XPATH,
@@ -76,33 +79,41 @@ def authorization1(setup):
     wait.until(ec.url_to_be(f'{env_url}hmi/755'))
     return driver
 
-@pytest.fixture
+
+@pytest.fixture(scope='session')
 def models_page(authorization1):
     driver = authorization1
-    button_settings = driver.find_element(By.XPATH, '/html/body/app-root/app-main-page/toolbar/div/div['
-                                                    '3]/div[4]/svg-icon')
+    button_settings = driver.find_element(By.XPATH, '/html/body/app-root/app-main-page/toolbar/div/div[3]/div['
+                                                    '5]/svg-icon')
     button_settings.click()
     wait_settings = WebDriverWait(driver, 10, 0.3)
+
+    driver.switch_to_window(driver.window_handles[1])
+
     wait_settings.until(ec.url_to_be(f'{env_url}conf/settings/figma'))
-    models_button = driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside'
-                                                  '/nav/ul/li[5]/a')
+    models_button = driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside/nav/ul/li['
+                                                  '4]/a')
     models_button.click()
     wait_models = WebDriverWait(driver, 10, 0.3)
     wait_models.until(ec.url_to_be(f'{env_url}conf/data/models'))
     return driver
 
-@pytest.fixture
+
+@pytest.fixture(scope='session')
 def objects_page(authorization1):
     driver = authorization1
-    button_settings = driver.find_element(By.XPATH, '/html/body/app-root/app-main-page/toolbar/div/div['
-                                                    '3]/div[4]/svg-icon')
+    button_settings = driver.find_element(By.XPATH, '/html/body/app-root/app-main-page/toolbar/div/div[3]/div['
+                                                    '5]/svg-icon')
     button_settings.click()
     wait = WebDriverWait(driver, 10, 0.3)
+
+    driver.switch_to_window(driver.window_handles[1])
+
     wait_settings = WebDriverWait(driver, 10, 0.3)
+
     wait_settings.until(ec.url_to_be(f'{env_url}conf/settings/figma'))
-    objects_button = driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside'
-                                                           '/nav/ul/li[4]/a')
+    objects_button = driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside/nav/ul'
+                                                   '/li[5]/a')
     objects_button.click()
     wait.until(ec.url_to_be(f'{env_url}conf/data/objects'))
     return driver
-

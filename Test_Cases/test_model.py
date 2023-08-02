@@ -1,13 +1,21 @@
 import pytest
 import time
 import random
+import allure
+import os
+from dotenv import load_dotenv
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
 
+load_dotenv()
+env_url = os.getenv('URL')
 
 class TestModel:
+    print(f'TEST MODELS LAUNCHED ON {env_url}')
+    @allure.description("Проверка работоспособности раздела 'Модели'")
     # simple model test
+    @allure.title("Создание простой модели, проверка и удаление")
     def test_model(self, models_page):
         print('Simple model test launched...')
         self.driver = models_page
@@ -26,8 +34,14 @@ class TestModel:
 
         button_create_model = self.driver.find_element(By.CLASS_NAME, 'btn.btn-icon.primary.md')
         button_create_model.click()
-        wait.until(ec.presence_of_element_located((By.XPATH, "//input[@class='classes']")))
-        model_name = self.driver.find_element(By.XPATH, "//input[@class='classes']")
+        wait.until(ec.presence_of_element_located((By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
+                                                             "-models-page/header-layout/div/div[2]/aside-layout/div["
+                                                             "2]/app-models-info-panel/form/div/form/lta-input/label"
+                                                             "/span[2]/input")))
+        model_name = self.driver.find_element(By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app-models"
+                                                        "-page/header-layout/div/div[2]/aside-layout/div["
+                                                        "2]/app-models-info-panel/form/div/form/lta-input/label/span["
+                                                        "2]/input")
         model_name.send_keys(name)
         model_description = self.driver.find_element(By.CLASS_NAME, 'textarea.sm')
         model_description.send_keys(description)
@@ -71,12 +85,13 @@ class TestModel:
         assert len(self.driver.find_elements(By.XPATH, "//*[contains(text(),'" + name + "')]")) == 0, 'Simple model ' \
                                                                                                       'was not deleted'
         print('Simple model deleted')
-        self.driver.close()
 
     # simple model component test
-    def test_model1(self, models_page):
+    @allure.description("Проверка работоспособности раздела 'Модели'")
+    @allure.title("Создание простой модели, добавление в нее компонентов, проверка и удаление")
+    def test_model1(self, get_webdriver):
         print('Simple model component test launched...')
-        self.driver = models_page
+        self.driver = get_webdriver
         name = 'AutoTest_Model'
         description = 'Тестовая модель'
         wait = WebDriverWait(self.driver, 15, 0.5)
@@ -91,8 +106,14 @@ class TestModel:
 
         button_create_model = self.driver.find_element(By.CLASS_NAME, 'btn.btn-icon.primary.md')
         button_create_model.click()
-        wait.until(ec.presence_of_element_located((By.XPATH, "//input[@class='classes']")))
-        model_name = self.driver.find_element(By.XPATH, "//input[@class='classes']")
+        wait.until(ec.presence_of_element_located((By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
+                                                             "-models-page/header-layout/div/div[2]/aside-layout/div["
+                                                             "2]/app-models-info-panel/form/div/form/lta-input/label"
+                                                             "/span[2]/input")))
+        model_name = self.driver.find_element(By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
+                                                             "-models-page/header-layout/div/div[2]/aside-layout/div["
+                                                             "2]/app-models-info-panel/form/div/form/lta-input/label"
+                                                             "/span[2]/input")
         model_name.send_keys(name)
         model_description = self.driver.find_element(By.CLASS_NAME, 'textarea.sm')
         model_description.send_keys(description)
@@ -156,6 +177,7 @@ class TestModel:
                                                              '2]/app-models-info-panel/form/div/div/div['
                                                              '2]/app-model-component-widget/div/div[2]/lta-btn['
                                                              '1]/button')))
+        time.sleep(2)
         second_component_added = self.driver.find_element(By.XPATH, "//*[contains(text(),' Pump / Right ')]")
         assert second_component_added.text == 'Pump / Right', 'Second component was not added'
         print('Second component added')
@@ -195,12 +217,13 @@ class TestModel:
                                                                                                       'components' \
                                                                                                       'was not deleted'
         print('Simple model with components deleted')
-        self.driver.quit()
 
     #simple model name validation test
-    def test_model2(self, models_page):
+    @allure.description("Проверка работоспособности раздела 'Модели'")
+    @allure.title("Создание двух простых моделей с одинаковыми именами, проверка и удаление")
+    def test_model2(self, get_webdriver):
         print('Simple model name validation test launched...')
-        self.driver = models_page
+        self.driver = get_webdriver
         name = 'AutoTest_Model'
         description = 'Тестовая модель'
         wait = WebDriverWait(self.driver, 15, 0.5)
@@ -216,8 +239,14 @@ class TestModel:
 
         button_create_model = self.driver.find_element(By.CLASS_NAME, 'btn.btn-icon.primary.md')
         button_create_model.click()
-        wait.until(ec.presence_of_element_located((By.XPATH, "//input[@class='classes']")))
-        model_name = self.driver.find_element(By.XPATH, "//input[@class='classes']")
+        wait.until(ec.presence_of_element_located((By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
+                                                             "-models-page/header-layout/div/div[2]/aside-layout/div["
+                                                             "2]/app-models-info-panel/form/div/form/lta-input/label"
+                                                             "/span[2]/input")))
+        model_name = self.driver.find_element(By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
+                                                             "-models-page/header-layout/div/div[2]/aside-layout/div["
+                                                             "2]/app-models-info-panel/form/div/form/lta-input/label"
+                                                             "/span[2]/input")
         model_name.send_keys(name)
         model_description = self.driver.find_element(By.CLASS_NAME, 'textarea.sm')
         model_description.send_keys(description)
@@ -302,12 +331,13 @@ class TestModel:
                                                                                                       'model ' \
                                                                                                       'was not deleted'
         print('First simple model deleted')
-        self.driver.close()
 
     # complex model test
-    def test_model3(self, models_page):
+    @allure.description("Проверка работоспособности раздела 'Модели'")
+    @allure.title("Создание сложной модели, содержащей две дочерние модели по каждой базовой модели, удаление одной из дочерних моделей, проверка и удаление сложной модели")
+    def test_model3(self, get_webdriver):
         print('Complex model test launched...')
-        self.driver = models_page
+        self.driver = get_webdriver
         name = 'AutoTest_Model'
         description = 'Тестовая модель'
         wait = WebDriverWait(self.driver, 15, 0.5)
@@ -323,8 +353,14 @@ class TestModel:
 
         button_create_model = self.driver.find_element(By.CLASS_NAME, 'btn.btn-icon.primary.md')
         button_create_model.click()
-        wait.until(ec.presence_of_element_located((By.XPATH, "//input[@class='classes']")))
-        model_name = self.driver.find_element(By.XPATH, "//input[@class='classes']")
+        wait.until(ec.presence_of_element_located((By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
+                                                             "-models-page/header-layout/div/div[2]/aside-layout/div["
+                                                             "2]/app-models-info-panel/form/div/form/lta-input/label"
+                                                             "/span[2]/input")))
+        model_name = self.driver.find_element(By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
+                                                             "-models-page/header-layout/div/div[2]/aside-layout/div["
+                                                             "2]/app-models-info-panel/form/div/form/lta-input/label"
+                                                             "/span[2]/input")
         model_name.send_keys(name)
         model_description = self.driver.find_element(By.CLASS_NAME, 'textarea.sm')
         model_description.send_keys(description)
@@ -346,8 +382,14 @@ class TestModel:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
         sub_model_button = self.driver.find_element(By.XPATH, "//*[contains(text(),' Новая модель ')]")
         sub_model_button.click()
-        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'classes.error')))
-        sub_model_name = self.driver.find_element(By.CLASS_NAME, 'classes.error')
+        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
+                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
+                                                             '2]/app-models-info-panel/form/div/form/lta-input/label'
+                                                             '/span[2]/input')))
+        sub_model_name = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app-models'
+                                                            '-page/header-layout/div/div[2]/aside-layout/div['
+                                                            '2]/app-models-info-panel/form/div/form/lta-input/label'
+                                                            '/span[2]/input')
         sub_model_name.send_keys('Test_boolean1')
         sub_model_description = self.driver.find_element(By.CLASS_NAME, 'textarea.sm')
         sub_model_description.send_keys('Дочерняя модель по модели Boolean #1')
@@ -371,7 +413,10 @@ class TestModel:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
         sub_model_button = self.driver.find_element(By.XPATH, "//*[contains(text(),' Новая модель ')]")
         sub_model_button.click()
-        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'classes.error')))
+        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
+                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
+                                                             '2]/app-models-info-panel/form/div/form/lta-input/label'
+                                                             '/span[2]/input')))
         sub_model_name.send_keys('Test_boolean2')
         sub_model_description.send_keys('Дочерняя модель по модели Boolean #2')
         models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
@@ -393,7 +438,10 @@ class TestModel:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
         sub_model_button = self.driver.find_element(By.XPATH, "//*[contains(text(),' Новая модель ')]")
         sub_model_button.click()
-        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'classes.error')))
+        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
+                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
+                                                             '2]/app-models-info-panel/form/div/form/lta-input/label'
+                                                             '/span[2]/input')))
         sub_model_name.send_keys('Test_directory1')
         sub_model_description.send_keys('Дочерняя модель по модели Directory #1')
         models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
@@ -416,7 +464,10 @@ class TestModel:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
         sub_model_button = self.driver.find_element(By.XPATH, "//*[contains(text(),' Новая модель ')]")
         sub_model_button.click()
-        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'classes.error')))
+        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
+                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
+                                                             '2]/app-models-info-panel/form/div/form/lta-input/label'
+                                                             '/span[2]/input')))
         sub_model_name.send_keys('Test_directory2')
         sub_model_description.send_keys('Дочерняя модель по модели Directory #2')
         models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
@@ -439,7 +490,10 @@ class TestModel:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
         sub_model_button = self.driver.find_element(By.XPATH, "//*[contains(text(),' Новая модель ')]")
         sub_model_button.click()
-        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'classes.error')))
+        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
+                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
+                                                             '2]/app-models-info-panel/form/div/form/lta-input/label'
+                                                             '/span[2]/input')))
         sub_model_name.send_keys('Test_float1')
         sub_model_description.send_keys('Дочерняя модель по модели Float #1')
         models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
@@ -462,7 +516,10 @@ class TestModel:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
         sub_model_button = self.driver.find_element(By.XPATH, "//*[contains(text(),' Новая модель ')]")
         sub_model_button.click()
-        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'classes.error')))
+        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
+                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
+                                                             '2]/app-models-info-panel/form/div/form/lta-input/label'
+                                                             '/span[2]/input')))
         sub_model_name.send_keys('Test_float2')
         sub_model_description.send_keys('Дочерняя модель по модели Float #2')
         models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
@@ -484,7 +541,10 @@ class TestModel:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
         sub_model_button = self.driver.find_element(By.XPATH, "//*[contains(text(),' Новая модель ')]")
         sub_model_button.click()
-        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'classes.error')))
+        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
+                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
+                                                             '2]/app-models-info-panel/form/div/form/lta-input/label'
+                                                             '/span[2]/input')))
         sub_model_name.send_keys('Test_string1')
         sub_model_description.send_keys('Дочерняя модель по модели String #1')
         models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
@@ -506,7 +566,10 @@ class TestModel:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
         sub_model_button = self.driver.find_element(By.XPATH, "//*[contains(text(),' Новая модель ')]")
         sub_model_button.click()
-        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'classes.error')))
+        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
+                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
+                                                             '2]/app-models-info-panel/form/div/form/lta-input/label'
+                                                             '/span[2]/input')))
         sub_model_name.send_keys('Test_string2')
         sub_model_description.send_keys('Дочерняя модель по модели String #2')
         models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
@@ -591,12 +654,12 @@ class TestModel:
                                                                                                       'was not deleted'
         print('Complex model deleted')
 
-        self.driver.close()
-
     #Complex model child models name validation test
-    def test_model4(self, models_page):
+    @allure.description("Проверка работоспособности раздела 'Модели'")
+    @allure.title("Создание сложной моедели с двумя дочерними моделями с одинаковыми именами, проверка и удаление")
+    def test_model4(self, get_webdriver):
         print('Complex model child models name validation test launched...')
-        self.driver = models_page
+        self.driver = get_webdriver
         name = 'AutoTest_Model'
         description = 'Тестовая модель'
         wait = WebDriverWait(self.driver, 15, 0.5)
@@ -612,8 +675,14 @@ class TestModel:
 
         button_create_model = self.driver.find_element(By.CLASS_NAME, 'btn.btn-icon.primary.md')
         button_create_model.click()
-        wait.until(ec.presence_of_element_located((By.XPATH, "//input[@class='classes']")))
-        model_name = self.driver.find_element(By.XPATH, "//input[@class='classes']")
+        wait.until(ec.presence_of_element_located((By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
+                                                             "-models-page/header-layout/div/div[2]/aside-layout/div["
+                                                             "2]/app-models-info-panel/form/div/form/lta-input/label"
+                                                             "/span[2]/input")))
+        model_name = self.driver.find_element(By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
+                                                             "-models-page/header-layout/div/div[2]/aside-layout/div["
+                                                             "2]/app-models-info-panel/form/div/form/lta-input/label"
+                                                             "/span[2]/input")
         model_name.send_keys(name)
         model_description = self.driver.find_element(By.CLASS_NAME, 'textarea.sm')
         model_description.send_keys(description)
@@ -636,10 +705,16 @@ class TestModel:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
         sub_model_button = self.driver.find_element(By.XPATH, "//*[contains(text(),' Новая модель ')]")
         sub_model_button.click()
-        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'classes.error')))
-        sub_model_name = self.driver.find_element(By.CLASS_NAME, 'classes.error')
+        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
+                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
+                                                             '2]/app-models-info-panel/form/div/form/lta-input/label'
+                                                             '/span[2]/input')))
+        sub_model_name = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app-models'
+                                                            '-page/header-layout/div/div[2]/aside-layout/div['
+                                                            '2]/app-models-info-panel/form/div/form/lta-input/label'
+                                                            '/span[2]/input')
         sub_model_name.send_keys('Test_sub_model1')
-        sub_model_description = self.driver.find_element(By.CLASS_NAME, 'textarea.sm')
+        sub_model_description = self.driver.find_element(By.CLASS_NAME, 'textarea.sm.ng-valid.ng-dirty.ng-touched')
         sub_model_description.send_keys('Дочерняя модель #1')
         models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
         models_list.click()
@@ -662,7 +737,10 @@ class TestModel:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
         sub_model_button = self.driver.find_element(By.XPATH, "//*[contains(text(),' Новая модель ')]")
         sub_model_button.click()
-        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'classes.error')))
+        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
+                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
+                                                             '2]/app-models-info-panel/form/div/form/lta-input/label'
+                                                             '/span[2]/input')))
         sub_model_name.send_keys('Test_sub_model1')
         sub_model_description.send_keys('Дочерняя модель #2')
         models_list.click()
@@ -716,3 +794,4 @@ class TestModel:
         print('Complex model deleted')
 
         self.driver.close()
+        self.driver.quit()

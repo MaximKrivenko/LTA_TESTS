@@ -9,7 +9,7 @@ load_dotenv()
 env_url = os.getenv('URL')
 
 class TestPlatform:
-    print('TEST LTA PLATFORM LAUNCHED')
+    print(f'TEST LTA PLATFORM LAUNCHED ON {env_url}')
 
     def test_platform(self, authorization):
         self.driver = authorization
@@ -20,6 +20,9 @@ class TestPlatform:
         button_settings = self.driver.find_element(By.XPATH, '/html/body/app-root/app-main-page/toolbar/div/div['
                                                             '3]/div[4]/svg-icon')
         button_settings.click()
+
+        self.driver.switch_to_window(self.driver.window_handles[1])
+        
         wait.until(ec.url_to_be(f'{env_url}conf/settings/figma'))
         button_settings_main = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
                                                                  '-settings-page/header-layout/div/div['
@@ -117,7 +120,7 @@ class TestPlatform:
         #models
         print('Models are being tested...')
         models_button = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside'
-                                                          '/nav/ul/li[5]/a')
+                                                          '/nav/ul/li[4]/a')
         models_button.click()
         wait.until(ec.url_to_be(f'{env_url}conf/data/models'))
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div'
@@ -129,7 +132,7 @@ class TestPlatform:
         #objects
         print('Objects are being tested...')
         objects_button = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside'
-                                                           '/nav/ul/li[4]/a')
+                                                           '/nav/ul/li[5]/a')
         objects_button.click()
         wait.until(ec.url_to_be(f'{env_url}conf/data/objects'))
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div'
