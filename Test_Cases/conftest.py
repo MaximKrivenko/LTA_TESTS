@@ -32,7 +32,7 @@ def get_chrome_options():
 def get_webdriver(request, get_chrome_options):
     options = get_chrome_options
     #driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
-    WebDriver driver = new ChromeDriver(options)
+    driver = webdriver.Chrome(options=options)
     #request.cls.driver = driver
     return driver
 
