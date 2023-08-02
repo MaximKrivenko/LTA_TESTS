@@ -21,7 +21,7 @@ class TestPlatform:
                                                             '3]/div[4]/svg-icon')
         button_settings.click()
 
-        self.driver.switch_to_window(self.driver.window_handles[1])
+        self.driver.switch_to.window(self.driver.window_handles[1])
         
         wait.until(ec.url_to_be(f'{env_url}conf/settings/figma'))
         button_settings_main = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'

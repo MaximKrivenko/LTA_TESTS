@@ -89,7 +89,7 @@ def models_page(authorization1):
     button_settings.click()
     wait_settings = WebDriverWait(driver, 10, 0.3)
 
-    driver.switch_to_window(driver.window_handles[1])
+    driver.switch_to.window(driver.window_handles[1])
 
     wait_settings.until(ec.url_to_be(f'{env_url}conf/settings/figma'))
     models_button = driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside/nav/ul/li['
@@ -108,7 +108,7 @@ def objects_page(authorization1):
     button_settings.click()
     wait = WebDriverWait(driver, 10, 0.3)
 
-    driver.switch_to_window(driver.window_handles[1])
+    driver.switch_to.window(driver.window_handles[1])
 
     wait_settings = WebDriverWait(driver, 10, 0.3)
 

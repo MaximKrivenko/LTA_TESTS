@@ -36,7 +36,7 @@ class TestHomepage:
         button_settings.click()
         wait_settings = WebDriverWait(self.driver, 10, 0.3)
 
-        self.driver.switch_to_window(self.driver.window_handles[1])
+        self.driver.switch_to.window(self.driver.window_handles[1])
 
         wait_settings.until(ec.url_to_be(f'{env_url}conf/settings/figma'))
         time.sleep(5)

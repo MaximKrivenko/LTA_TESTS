@@ -23,9 +23,7 @@ class TestModel:
         description = 'Тестовая модель'
         wait = WebDriverWait(self.driver, 15, 0.5)
 
-        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app-models'
-                                                             '-page/header-layout/div/div[2]/aside-layout/div['
-                                                             '1]/lta-empty-panel/app-tree')))
+        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app-models-page/header-layout/div/div[2]/aside-layout/div[1]/lta-empty-panel')))
 
         same_models = len(self.driver.find_elements(By.XPATH, "//*[contains(text(),'" + name + "')]"))
         while same_models != 0:
