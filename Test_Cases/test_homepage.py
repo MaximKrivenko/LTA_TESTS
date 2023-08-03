@@ -41,4 +41,3 @@ class TestHomepage:
         wait_settings.until(ec.url_to_be(f'{env_url}conf/settings/figma'))
         time.sleep(5)
         self.driver.close()
-        self.driver.quit()
