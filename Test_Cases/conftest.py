@@ -11,7 +11,6 @@ from selenium.webdriver.chrome.options import Options as chrome_options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
-from pyvirtualdisplay import Display
 
 load_dotenv()
 env_url = os.getenv('URL')
@@ -22,17 +21,16 @@ env_password = os.getenv('PASSWORD')
 @pytest.fixture(scope='session', autouse=True)
 def get_chrome_options():
     options = chrome_options()
+    options.add_argument('--no-sandbox')
     options.add_argument('chrome')
     options.add_argument('--start-maximized')
     options.add_argument('--window-size=1920,1080')
-    #options.add_argument('--headless')
+    options.add_argument('--headless=new')
     return options
 
 
 @pytest.fixture(scope='session')
 def get_webdriver(request, get_chrome_options):
-    display = Display(visible=0, size=(800, 800))
-    display.start()
     options = get_chrome_options
     #driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
     driver = webdriver.Chrome(options=options)
