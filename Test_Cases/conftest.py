@@ -11,6 +11,7 @@ from selenium.webdriver.chrome.options import Options as chrome_options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
+from pyvirtualdisplay import Display
 
 load_dotenv()
 env_url = os.getenv('URL')
@@ -30,6 +31,8 @@ def get_chrome_options():
 
 @pytest.fixture(scope='session')
 def get_webdriver(request, get_chrome_options):
+    display = Display(visible=0, size=(800, 800))
+    display.start()
     options = get_chrome_options
     #driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
     driver = webdriver.Chrome(options=options)
