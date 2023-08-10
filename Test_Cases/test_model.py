@@ -49,7 +49,7 @@ class TestModel:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'" + name + "')]")))
         print('Simple model created')
         created_model = self.driver.find_element(By.XPATH, "//*[contains(text(),'" + name + "')]")
-        assert created_model.text == f'{name} Тестовая модель', 'Model was not created'
+        assert created_model.text == f'{name}', 'Model was not created'
         print('Simple model checked')
         delete_button = self.driver.find_element(By.XPATH,
                                                  '/html/body/app-root/app-admin-layout/div/main/app-models-page'
@@ -254,7 +254,7 @@ class TestModel:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'" + name + "')]")))
         print('First simple model created')
         created_model = self.driver.find_element(By.XPATH, "//*[contains(text(),'" + name + "')]")
-        assert created_model.text == f'{name} Тестовая модель', 'First simple model was not created'
+        assert created_model.text == f'{name}', 'First simple model was not created'
         print('First simple model checked')
         cancel_button = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app-models'
                                                            '-page/header-layout/div/div[2]/aside-layout/div['
@@ -373,8 +373,8 @@ class TestModel:
         cancel_button.click()
 
         chevron_right_button = self.driver.find_element(By.XPATH, "//*[contains(text(),"
-                                                                  "'" + name + "')]//parent::div//parent::div//child"
-                                                                               "::span//child::svg-icon")
+                                                                  "'" + name + "')]//parent::div//parent::div//parent"
+                                                                               "::div//child::span//child::svg-icon")
         chevron_right_button.click()
 
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
@@ -405,7 +405,7 @@ class TestModel:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Test_boolean1 ')]")))
         print('Sub model boolean1 created')
         sub_model_boolean1 = self.driver.find_element(By.XPATH, "//*[contains(text(),' Test_boolean1 ')]")
-        assert sub_model_boolean1.text == 'Test_boolean1 Дочерняя модель по модели Boolean #1', 'Sub model boolean 1 ' \
+        assert sub_model_boolean1.text == 'Test_boolean1', 'Sub model boolean 1 ' \
                                                                                                 'was not created'
 
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
@@ -430,7 +430,7 @@ class TestModel:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Test_boolean2 ')]")))
         print('Sub model boolean2 created')
         sub_model_boolean2 = self.driver.find_element(By.XPATH, "//*[contains(text(),' Test_boolean2 ')]")
-        assert sub_model_boolean2.text == 'Test_boolean2 Дочерняя модель по модели Boolean #2', 'Sub model boolean 2 ' \
+        assert sub_model_boolean2.text == 'Test_boolean2', 'Sub model boolean 2 ' \
                                                                                                 'was not created'
 
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
@@ -448,14 +448,14 @@ class TestModel:
                                                                         '/main/app-models-page/header-layout/div/div['
                                                                         '2]/aside-layout/div['
                                                                         '2]/app-models-info-panel/form/div/form/lta'
-                                                                        '-select/label/span[2]/span/span[2]/span[2]')
+                                                                        '-select/label/span[2]/span/span[2]/span[4]')
         sub_model_directory_choose.click()
         wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'btn.success.md')))
         save_button.click()
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Test_directory1 ')]")))
         print('Sub model directory1 created')
         sub_model_directory1 = self.driver.find_element(By.XPATH, "//*[contains(text(),' Test_directory1 ')]")
-        assert sub_model_directory1.text == 'Test_directory1 Дочерняя модель по модели Directory #1', 'Sub model ' \
+        assert sub_model_directory1.text == 'Test_directory1', 'Sub model ' \
                                                                                                       'directory 1 ' \
                                                                                                       'was not created'
 
@@ -474,14 +474,14 @@ class TestModel:
                                                                         '/main/app-models-page/header-layout/div/div['
                                                                         '2]/aside-layout/div['
                                                                         '2]/app-models-info-panel/form/div/form/lta'
-                                                                        '-select/label/span[2]/span/span[2]/span[2]')
+                                                                        '-select/label/span[2]/span/span[2]/span[4]')
         sub_model_directory_choose.click()
         wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'btn.success.md')))
         save_button.click()
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Test_directory2 ')]")))
         print('Sub model directory2 created')
         sub_model_directory2 = self.driver.find_element(By.XPATH, "//*[contains(text(),' Test_directory2 ')]")
-        assert sub_model_directory2.text == 'Test_directory2 Дочерняя модель по модели Directory #2', 'Sub model ' \
+        assert sub_model_directory2.text == 'Test_directory2', 'Sub model ' \
                                                                                                       'directory 2 ' \
                                                                                                       'was not created'
 
@@ -507,7 +507,7 @@ class TestModel:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Test_float1 ')]")))
         print('Sub model float1 created')
         sub_model_float1 = self.driver.find_element(By.XPATH, "//*[contains(text(),' Test_float1 ')]")
-        assert sub_model_float1.text == 'Test_float1 Дочерняя модель по модели Float #1', 'Sub model ' \
+        assert sub_model_float1.text == 'Test_float1', 'Sub model ' \
                                                                                           'float 1 ' \
                                                                                           'was not created'
 
@@ -533,7 +533,7 @@ class TestModel:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Test_float2 ')]")))
         print('Sub model float2 created')
         sub_model_float2 = self.driver.find_element(By.XPATH, "//*[contains(text(),' Test_float2 ')]")
-        assert sub_model_float2.text == 'Test_float2 Дочерняя модель по модели Float #2', 'Sub model ' \
+        assert sub_model_float2.text == 'Test_float2', 'Sub model ' \
                                                                                           'float 2 ' \
                                                                                           'was not created'
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
@@ -558,7 +558,7 @@ class TestModel:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Test_string1 ')]")))
         print('Sub model string1 created')
         sub_model_string1 = self.driver.find_element(By.XPATH, "//*[contains(text(),' Test_string1 ')]")
-        assert sub_model_string1.text == 'Test_string1 Дочерняя модель по модели String #1', 'Sub model ' \
+        assert sub_model_string1.text == 'Test_string1', 'Sub model ' \
                                                                                              'string 1 ' \
                                                                                              'was not created'
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
@@ -583,7 +583,7 @@ class TestModel:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Test_string2 ')]")))
         print('Sub model string2 created')
         sub_model_string2 = self.driver.find_element(By.XPATH, "//*[contains(text(),' Test_string2 ')]")
-        assert sub_model_string2.text == 'Test_string2 Дочерняя модель по модели String #2', 'Sub model ' \
+        assert sub_model_string2.text == 'Test_string2', 'Sub model ' \
                                                                                              'string 2 ' \
                                                                                              'was not created'
         print('Complex model created and checked')
@@ -696,8 +696,8 @@ class TestModel:
         cancel_button.click()
 
         chevron_right_button = self.driver.find_element(By.XPATH, "//*[contains(text(),"
-                                                                      "'" + name + "')]//parent::div//parent::div//child"
-                                                                                   "::span//child::svg-icon")
+                                                                  "'" + name + "')]//parent::div//parent::div//parent"
+                                                                               "::div//child::span//child::svg-icon")
         chevron_right_button.click()
 
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
@@ -729,7 +729,7 @@ class TestModel:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Test_sub_model1 ')]")))
         print('Sub model #1 created')
         sub_model_boolean1 = self.driver.find_element(By.XPATH, "//*[contains(text(),' Test_sub_model1 ')]")
-        assert sub_model_boolean1.text == 'Test_sub_model1 Дочерняя модель #1', 'Sub model #1 ' \
+        assert sub_model_boolean1.text == 'Test_sub_model1', 'Sub model #1 ' \
                                                                                                     'was not created'
         print('Trying to create second sub model with the same name...')
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))

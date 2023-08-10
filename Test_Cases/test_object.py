@@ -51,7 +51,7 @@ class TestObject:
                                                              '-objects-page/header-layout/div/div['
                                                              '2]/aside-layout/div['
                                                              '2]/app-object-info-panel/div/div/form/lta-select/label'
-                                                             '/span[2]/span/span[2]/span[2]')
+                                                             '/span[2]/span/span[2]/span[4]')
         model_directory.click()
         object_description = self.driver.find_element(By.CLASS_NAME, 'textarea')
         object_description.send_keys(description)
@@ -133,7 +133,7 @@ class TestObject:
                                                              '-objects-page/header-layout/div/div['
                                                              '2]/aside-layout/div['
                                                              '2]/app-object-info-panel/div/div/form/lta-select/label'
-                                                             '/span[2]/span/span[2]/span[2]')
+                                                             '/span[2]/span/span[2]/span[4]')
         model_directory.click()
         object_description = self.driver.find_element(By.CLASS_NAME, 'textarea')
         object_description.send_keys(description)
@@ -161,7 +161,7 @@ class TestObject:
                                                              '-objects-page/header-layout/div/div['
                                                              '2]/aside-layout/div['
                                                              '2]/app-object-info-panel/div/div/form/lta-select/label'
-                                                             '/span[2]/span/span[2]/span[2]')
+                                                             '/span[2]/span/span[2]/span[4]')
         model_directory.click()
         object_description.send_keys(description)
         wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'btn.success.md')))
@@ -255,7 +255,7 @@ class TestObject:
                                                              '-objects-page/header-layout/div/div['
                                                              '2]/aside-layout/div['
                                                              '2]/app-object-info-panel/div/div/form/lta-select/label'
-                                                             '/span[2]/span/span[2]/span[2]')
+                                                             '/span[2]/span/span[2]/span[4]')
         model_directory.click()
         object_description = self.driver.find_element(By.CLASS_NAME, 'textarea')
         object_description.send_keys(description)
@@ -318,7 +318,7 @@ class TestObject:
                                                              '-objects-page/header-layout/div/div['
                                                              '2]/aside-layout/div['
                                                              '2]/app-object-info-panel/div/div/form/lta-select/label'
-                                                             '/span[2]/span/span[2]/span[2]')
+                                                             '/span[2]/span/span[2]/span[4]')
         model_directory.click()
         object_description = self.driver.find_element(By.CLASS_NAME, 'textarea')
         object_description.send_keys(child_description)
@@ -410,7 +410,7 @@ class TestObject:
                                                              '-objects-page/header-layout/div/div['
                                                              '2]/aside-layout/div['
                                                              '2]/app-object-info-panel/div/div/form/lta-select/label'
-                                                             '/span[2]/span/span[2]/span[2]')
+                                                             '/span[2]/span/span[2]/span[4]')
         model_directory.click()
         object_description = self.driver.find_element(By.CLASS_NAME, 'textarea')
         object_description.send_keys(description)
@@ -476,7 +476,7 @@ class TestObject:
                                                              '-objects-page/header-layout/div/div['
                                                              '2]/aside-layout/div['
                                                              '2]/app-object-info-panel/div/div/form/lta-select/label'
-                                                             '/span[2]/span/span[2]/span[2]')
+                                                             '/span[2]/span/span[2]/span[4]')
         model_directory.click()
         object_description = self.driver.find_element(By.CLASS_NAME, 'textarea')
         object_description.send_keys(child_description)
@@ -534,7 +534,7 @@ class TestObject:
                                                              '-objects-page/header-layout/div/div['
                                                              '2]/aside-layout/div['
                                                              '2]/app-object-info-panel/div/div/form/lta-select/label'
-                                                             '/span[2]/span/span[2]/span[2]')
+                                                             '/span[2]/span/span[2]/span[4]')
         model_directory.click()
         object_description = self.driver.find_element(By.CLASS_NAME, 'textarea')
         object_description.send_keys(child_description)
@@ -625,7 +625,7 @@ class TestObject:
                                                              '-objects-page/header-layout/div/div['
                                                              '2]/aside-layout/div['
                                                              '2]/app-object-info-panel/div/div/form/lta-select/label'
-                                                             '/span[2]/span/span[2]/span[2]')
+                                                             '/span[2]/span/span[2]/span[4]')
         model_directory.click()
         object_description = self.driver.find_element(By.CLASS_NAME, 'textarea')
         object_description.send_keys(description)
@@ -688,7 +688,7 @@ class TestObject:
                                                              '-objects-page/header-layout/div/div['
                                                              '2]/aside-layout/div['
                                                              '2]/app-object-info-panel/div/div/form/lta-select/label'
-                                                             '/span[2]/span/span[2]/span[2]')
+                                                             '/span[2]/span/span[2]/span[4]')
         model_directory.click()
         object_description = self.driver.find_element(By.CLASS_NAME, 'textarea')
         object_description.send_keys(child_description_1)
@@ -742,7 +742,7 @@ class TestObject:
                                                              '-objects-page/header-layout/div/div['
                                                              '2]/aside-layout/div['
                                                              '2]/app-object-info-panel/div/div/form/lta-select/label'
-                                                             '/span[2]/span/span[2]/span[2]')
+                                                             '/span[2]/span/span[2]/span[4]')
         model_directory.click()
         object_description = self.driver.find_element(By.CLASS_NAME, 'textarea')
         object_description.send_keys(child_description_2)
@@ -891,7 +891,7 @@ class TestObject:
                                                                         '/main/app-models-page/header-layout/div/div['
                                                                         '2]/aside-layout/div['
                                                                         '2]/app-models-info-panel/form/div/form/lta'
-                                                                        '-select/label/span[2]/span/span[2]/span[2]')
+                                                                        '-select/label/span[2]/span/span[2]/span[4]')
         sub_model_directory_choose.click()
         wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'btn.success.md')))
         save_button.click()
@@ -980,7 +980,7 @@ class TestObject:
                                                              '-objects-page/header-layout/div/div['
                                                              '2]/aside-layout/div['
                                                              '2]/app-object-info-panel/div/div/form/lta-select/label'
-                                                             '/span[2]/span/span[2]/span[2]')
+                                                             '/span[2]/span/span[2]/span[4]')
         model_directory.click()
         object_description_input = self.driver.find_element(By.CLASS_NAME, 'textarea')
         object_description_input.send_keys(object_description)
@@ -1235,7 +1235,7 @@ class TestObject:
                                                                         '/main/app-models-page/header-layout/div/div['
                                                                         '2]/aside-layout/div['
                                                                         '2]/app-models-info-panel/form/div/form/lta'
-                                                                        '-select/label/span[2]/span/span[2]/span[2]')
+                                                                        '-select/label/span[2]/span/span[2]/span[4]')
         sub_model_directory_choose.click()
         wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'btn.success.md')))
         save_button.click()
@@ -1322,7 +1322,7 @@ class TestObject:
                                                              '-objects-page/header-layout/div/div['
                                                              '2]/aside-layout/div['
                                                              '2]/app-object-info-panel/div/div/form/lta-select/label'
-                                                             '/span[2]/span/span[2]/span[2]')
+                                                             '/span[2]/span/span[2]/span[4]')
         model_directory.click()
         object_description_input = self.driver.find_element(By.CLASS_NAME, 'textarea')
         object_description_input.send_keys(object_description)
@@ -1590,7 +1590,7 @@ class TestObject:
                                                                         '/main/app-models-page/header-layout/div/div['
                                                                         '2]/aside-layout/div['
                                                                         '2]/app-models-info-panel/form/div/form/lta'
-                                                                        '-select/label/span[2]/span/span[2]/span[2]')
+                                                                        '-select/label/span[2]/span/span[2]/span[4]')
         sub_model_directory_choose.click()
         wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'btn.success.md')))
         save_button.click()
@@ -1677,7 +1677,7 @@ class TestObject:
                                                              '-objects-page/header-layout/div/div['
                                                              '2]/aside-layout/div['
                                                              '2]/app-object-info-panel/div/div/form/lta-select/label'
-                                                             '/span[2]/span/span[2]/span[2]')
+                                                             '/span[2]/span/span[2]/span[4]')
         model_directory.click()
         object_description_input = self.driver.find_element(By.CLASS_NAME, 'textarea')
         object_description_input.send_keys(object_description)

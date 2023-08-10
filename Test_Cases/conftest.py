@@ -21,7 +21,7 @@ env_password = os.getenv('PASSWORD')
 @pytest.fixture(scope='session', autouse=True)
 def get_chrome_options():
     options = chrome_options()
-    options.add_argument('--no-sandbox')
+    #options.add_argument('--no-sandbox')
     options.add_argument('chrome')
     options.add_argument('--start-maximized')
     options.add_argument('--window-size=1920,1080')
