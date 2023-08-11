@@ -44,7 +44,7 @@ jobs:
     - name: Test with pytest
       if: always()
       run:
-        pytest test_model.py -s -v -p no:warnings --alluredir=allure-result
+        pytest /home/runner/work/LTA_TESTS/LTA_TESTS/Test_Cases/test_model.py -s -v -p no:warnings --alluredir=allure-result
       continue-on-error: true
 
     - name: Get Allure history
