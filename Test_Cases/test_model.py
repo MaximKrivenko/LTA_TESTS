@@ -21,11 +21,16 @@ class TestModel:
         self.driver = models_page
         name = 'AutoTest_Model'
         description = 'Тестовая модель'
-        wait = WebDriverWait(self.driver, 15, 0.5)
+        wait = WebDriverWait(self.driver, 20, 0.5)
 
-        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app-models-page/header-layout/div/div[2]/aside-layout/div[1]/lta-empty-panel')))
+        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
+                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
+                                                             '1]/lta-empty-panel')))
 
         same_models = len(self.driver.find_elements(By.XPATH, "//*[contains(text(),'" + name + "')]"))
+        if same_models == 1:
+            print(f'{same_models} model with the name {name} was found. Check it out!')
+
         while same_models != 0:
             name = name + str(random.randint(0, 100))
             same_models = len(self.driver.find_elements(By.XPATH, "//*[contains(text(),'" + name + "')]"))
@@ -34,12 +39,12 @@ class TestModel:
         button_create_model.click()
         wait.until(ec.presence_of_element_located((By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
                                                              "-models-page/header-layout/div/div[2]/aside-layout/div["
-                                                             "2]/app-models-info-panel/form/div/form/lta-input/label"
-                                                             "/span[2]/input")))
-        model_name = self.driver.find_element(By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app-models"
-                                                        "-page/header-layout/div/div[2]/aside-layout/div["
-                                                        "2]/app-models-info-panel/form/div/form/lta-input/label/span["
-                                                        "2]/input")
+                                                             "2]/app-models-info-panel/form/div/lta-spoiler-panel/div"
+                                                             "/form/lta-input/label/span[2]/input")))
+        model_name = self.driver.find_element(By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
+                                                             "-models-page/header-layout/div/div[2]/aside-layout/div["
+                                                             "2]/app-models-info-panel/form/div/lta-spoiler-panel/div"
+                                                             "/form/lta-input/label/span[2]/input")
         model_name.send_keys(name)
         model_description = self.driver.find_element(By.CLASS_NAME, 'textarea.sm')
         model_description.send_keys(description)
@@ -106,25 +111,32 @@ class TestModel:
         button_create_model.click()
         wait.until(ec.presence_of_element_located((By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
                                                              "-models-page/header-layout/div/div[2]/aside-layout/div["
-                                                             "2]/app-models-info-panel/form/div/form/lta-input/label"
-                                                             "/span[2]/input")))
+                                                             "2]/app-models-info-panel/form/div/lta-spoiler-panel/div"
+                                                             "/form/lta-input/label/span[2]/input")))
         model_name = self.driver.find_element(By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
                                                              "-models-page/header-layout/div/div[2]/aside-layout/div["
-                                                             "2]/app-models-info-panel/form/div/form/lta-input/label"
-                                                             "/span[2]/input")
+                                                             "2]/app-models-info-panel/form/div/lta-spoiler-panel/div"
+                                                             "/form/lta-input/label/span[2]/input")
         model_name.send_keys(name)
         model_description = self.driver.find_element(By.CLASS_NAME, 'textarea.sm')
         model_description.send_keys(description)
         wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'btn.success.md')))
         save_button = self.driver.find_element(By.CLASS_NAME, 'btn.success.md')
         save_button.click()
-        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'btn.dashed.md')))
+        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
+                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
+                                                             '2]/app-models-info-panel/form/div/div')))
+        unroll_component_button = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
+                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
+                                                             '2]/app-models-info-panel/form/div/div')
+        unroll_component_button.click()
+        wait.until(ec.element_to_be_clickable((By.CLASS_NAME, 'btn.dashed.md')))
         add_component_button = self.driver.find_element(By.CLASS_NAME, 'btn.dashed.md')
         add_component_button.click()
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
                                                              '-models-page/header-layout/div/div[2]/aside-layout/div['
                                                              '2]/app-models-info-panel/app-model-component-dialog/lta'
-                                                             '-modal-layout/div/lta-modal/div[3]/lta-btn[1]/button')))
+                                                             '-modal-layout/div/lta-modal/div[2]/lta-btn[1]/button')))
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Arrow_Left ')]")))
         first_component = self.driver.find_element(By.XPATH, "//*[contains(text(),' Arrow_Left ')]")
         first_component.click()
@@ -132,20 +144,16 @@ class TestModel:
                                                                '-models-page/header-layout/div/div['
                                                                '2]/aside-layout/div['
                                                                '2]/app-models-info-panel/app-model-component-dialog'
-                                                               '/lta-modal-layout/div/lta-modal/div[3]/lta-btn['
+                                                               '/lta-modal-layout/div/lta-modal/div[2]/lta-btn['
                                                                '2]/button')))
-        add_component_button_window = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div'
-                                                                         '/main/app-models-page/header-layout/div'
-                                                                         '/div[2]/aside-layout/div['
-                                                                         '2]/app-models-info-panel/app-model'
-                                                                         '-component-dialog/lta-modal-layout/div/lta'
-                                                                         '-modal/div[3]/lta-btn[2]/button')
+        add_component_button_window = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
+                                                               '-models-page/header-layout/div/div['
+                                                               '2]/aside-layout/div['
+                                                               '2]/app-models-info-panel/app-model-component-dialog'
+                                                               '/lta-modal-layout/div/lta-modal/div[2]/lta-btn['
+                                                               '2]/button')
         add_component_button_window.click()
-        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
-                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
-                                                             '2]/app-models-info-panel/form/div/div/div['
-                                                             '2]/app-model-component-widget/div/div[2]/lta-btn['
-                                                             '1]/button')))
+        time.sleep(2)
         first_component_added = self.driver.find_element(By.XPATH, "//*[contains(text(),' Arrow_Left ')]")
         assert first_component_added.text == 'Arrow_Left', 'First component was not added'
         print('First component added')
@@ -153,7 +161,7 @@ class TestModel:
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
                                                              '-models-page/header-layout/div/div[2]/aside-layout/div['
                                                              '2]/app-models-info-panel/app-model-component-dialog/lta'
-                                                             '-modal-layout/div/lta-modal/div[3]/lta-btn[1]/button')))
+                                                             '-modal-layout/div/lta-modal/div[2]/lta-btn[1]/button')))
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Pump / Right  ')]")))
         second_component = self.driver.find_element(By.XPATH, "//*[contains(text(),' Pump / Right  ')]")
         second_component.click()
@@ -161,20 +169,15 @@ class TestModel:
                                                                '-models-page/header-layout/div/div['
                                                                '2]/aside-layout/div['
                                                                '2]/app-models-info-panel/app-model-component-dialog'
-                                                               '/lta-modal-layout/div/lta-modal/div[3]/lta-btn['
+                                                               '/lta-modal-layout/div/lta-modal/div[2]/lta-btn['
                                                                '2]/button')))
-        add_component_button_window = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div'
-                                                                         '/main/app-models-page/header-layout/div'
-                                                                         '/div[2]/aside-layout/div['
-                                                                         '2]/app-models-info-panel/app-model'
-                                                                         '-component-dialog/lta-modal-layout/div/lta'
-                                                                         '-modal/div[3]/lta-btn[2]/button')
+        add_component_button_window = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
+                                                               '-models-page/header-layout/div/div['
+                                                               '2]/aside-layout/div['
+                                                               '2]/app-models-info-panel/app-model-component-dialog'
+                                                               '/lta-modal-layout/div/lta-modal/div[2]/lta-btn['
+                                                               '2]/button')
         add_component_button_window.click()
-        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
-                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
-                                                             '2]/app-models-info-panel/form/div/div/div['
-                                                             '2]/app-model-component-widget/div/div[2]/lta-btn['
-                                                             '1]/button')))
         time.sleep(2)
         second_component_added = self.driver.find_element(By.XPATH, "//*[contains(text(),' Pump / Right ')]")
         assert second_component_added.text == 'Pump / Right', 'Second component was not added'
@@ -239,12 +242,12 @@ class TestModel:
         button_create_model.click()
         wait.until(ec.presence_of_element_located((By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
                                                              "-models-page/header-layout/div/div[2]/aside-layout/div["
-                                                             "2]/app-models-info-panel/form/div/form/lta-input/label"
-                                                             "/span[2]/input")))
+                                                             "2]/app-models-info-panel/form/div/lta-spoiler-panel/div"
+                                                             "/form/lta-input/label/span[2]/input")))
         model_name = self.driver.find_element(By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
                                                              "-models-page/header-layout/div/div[2]/aside-layout/div["
-                                                             "2]/app-models-info-panel/form/div/form/lta-input/label"
-                                                             "/span[2]/input")
+                                                             "2]/app-models-info-panel/form/div/lta-spoiler-panel/div"
+                                                             "/form/lta-input/label/span[2]/input")
         model_name.send_keys(name)
         model_description = self.driver.find_element(By.CLASS_NAME, 'textarea.sm')
         model_description.send_keys(description)
@@ -263,10 +266,10 @@ class TestModel:
         cancel_button.click()
         print('Trying to create second simple model with the same name...')
         button_create_model.click()
-        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
-                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
-                                                             '2]/app-models-info-panel/form/div/form/lta-input/label'
-                                                             '/span[2]/input')))
+        wait.until(ec.presence_of_element_located((By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
+                                                             "-models-page/header-layout/div/div[2]/aside-layout/div["
+                                                             "2]/app-models-info-panel/form/div/lta-spoiler-panel/div"
+                                                             "/form/lta-input/label/span[2]/input")))
         model_name.send_keys(name)
         model_description.send_keys(description)
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
@@ -286,7 +289,7 @@ class TestModel:
                                                                                                      F'{name} were ' \
                                                                                                      F'created, ' \
                                                                                                      F'need to fix'
-        print('There is only one simple model with the name', name, 'created')
+        print('There is only one simple model with the name', name)
 
         simple_model = self.driver.find_element(By.XPATH, "//*[contains(text(),'" + name + "')]")
         simple_model.click()
@@ -353,12 +356,12 @@ class TestModel:
         button_create_model.click()
         wait.until(ec.presence_of_element_located((By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
                                                              "-models-page/header-layout/div/div[2]/aside-layout/div["
-                                                             "2]/app-models-info-panel/form/div/form/lta-input/label"
-                                                             "/span[2]/input")))
+                                                             "2]/app-models-info-panel/form/div/lta-spoiler-panel/div"
+                                                             "/form/lta-input/label/span[2]/input")))
         model_name = self.driver.find_element(By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
                                                              "-models-page/header-layout/div/div[2]/aside-layout/div["
-                                                             "2]/app-models-info-panel/form/div/form/lta-input/label"
-                                                             "/span[2]/input")
+                                                             "2]/app-models-info-panel/form/div/lta-spoiler-panel/div"
+                                                             "/form/lta-input/label/span[2]/input")
         model_name.send_keys(name)
         model_description = self.driver.find_element(By.CLASS_NAME, 'textarea.sm')
         model_description.send_keys(description)
@@ -380,24 +383,28 @@ class TestModel:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
         sub_model_button = self.driver.find_element(By.XPATH, "//*[contains(text(),' Новая модель ')]")
         sub_model_button.click()
-        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
-                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
-                                                             '2]/app-models-info-panel/form/div/form/lta-input/label'
-                                                             '/span[2]/input')))
-        sub_model_name = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app-models'
-                                                            '-page/header-layout/div/div[2]/aside-layout/div['
-                                                            '2]/app-models-info-panel/form/div/form/lta-input/label'
-                                                            '/span[2]/input')
+        wait.until(ec.presence_of_element_located((By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
+                                                             "-models-page/header-layout/div/div[2]/aside-layout/div["
+                                                             "2]/app-models-info-panel/form/div/lta-spoiler-panel/div"
+                                                             "/form/lta-input/label/span[2]/input")))
+        sub_model_name = self.driver.find_element(By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
+                                                             "-models-page/header-layout/div/div[2]/aside-layout/div["
+                                                             "2]/app-models-info-panel/form/div/lta-spoiler-panel/div"
+                                                             "/form/lta-input/label/span[2]/input")
         sub_model_name.send_keys('Test_boolean1')
         sub_model_description = self.driver.find_element(By.CLASS_NAME, 'textarea.sm')
         sub_model_description.send_keys('Дочерняя модель по модели Boolean #1')
+        wait.until(ec.element_to_be_clickable((By.CLASS_NAME, 'input.sm')))
         models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
         models_list.click()
-        sub_model_boolean_choose = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main'
-                                                                      '/app-models-page/header-layout/div/div['
-                                                                      '2]/aside-layout/div['
-                                                                      '2]/app-models-info-panel/form/div/form/lta'
-                                                                      '-select/label/span[2]/span/span[2]/span[1]')
+        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
+                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
+                                                             '2]/app-models-info-panel/form/div/lta-spoiler-panel/div'
+                                                             '/form/lta-select/label/span[2]/span/span[2]/span[1]')))
+        sub_model_boolean_choose = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
+                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
+                                                             '2]/app-models-info-panel/form/div/lta-spoiler-panel/div'
+                                                             '/form/lta-select/label/span[2]/span/span[2]/span[1]')
         sub_model_boolean_choose.click()
         wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'btn.success.md')))
         save_button = self.driver.find_element(By.CLASS_NAME, 'btn.success.md')
@@ -411,19 +418,23 @@ class TestModel:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
         sub_model_button = self.driver.find_element(By.XPATH, "//*[contains(text(),' Новая модель ')]")
         sub_model_button.click()
-        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
-                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
-                                                             '2]/app-models-info-panel/form/div/form/lta-input/label'
-                                                             '/span[2]/input')))
+        wait.until(ec.presence_of_element_located((By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
+                                                             "-models-page/header-layout/div/div[2]/aside-layout/div["
+                                                             "2]/app-models-info-panel/form/div/lta-spoiler-panel/div"
+                                                             "/form/lta-input/label/span[2]/input")))
         sub_model_name.send_keys('Test_boolean2')
         sub_model_description.send_keys('Дочерняя модель по модели Boolean #2')
+        wait.until(ec.element_to_be_clickable((By.CLASS_NAME, 'input.sm')))
         models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
         models_list.click()
-        sub_model_boolean_choose = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main'
-                                                                      '/app-models-page/header-layout/div/div['
-                                                                      '2]/aside-layout/div['
-                                                                      '2]/app-models-info-panel/form/div/form/lta'
-                                                                      '-select/label/span[2]/span/span[2]/span[1]')
+        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
+                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
+                                                             '2]/app-models-info-panel/form/div/lta-spoiler-panel/div'
+                                                             '/form/lta-select/label/span[2]/span/span[2]/span[1]')))
+        sub_model_boolean_choose = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
+                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
+                                                             '2]/app-models-info-panel/form/div/lta-spoiler-panel/div'
+                                                             '/form/lta-select/label/span[2]/span/span[2]/span[1]')
         sub_model_boolean_choose.click()
         wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'btn.success.md')))
         save_button.click()
@@ -436,19 +447,27 @@ class TestModel:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
         sub_model_button = self.driver.find_element(By.XPATH, "//*[contains(text(),' Новая модель ')]")
         sub_model_button.click()
-        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
-                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
-                                                             '2]/app-models-info-panel/form/div/form/lta-input/label'
-                                                             '/span[2]/input')))
+        wait.until(ec.presence_of_element_located((By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
+                                                             "-models-page/header-layout/div/div[2]/aside-layout/div["
+                                                             "2]/app-models-info-panel/form/div/lta-spoiler-panel/div"
+                                                             "/form/lta-input/label/span[2]/input")))
         sub_model_name.send_keys('Test_directory1')
         sub_model_description.send_keys('Дочерняя модель по модели Directory #1')
+        wait.until(ec.element_to_be_clickable((By.CLASS_NAME, 'input.sm')))
         models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
         models_list.click()
+        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div'
+                                                                        '/main/app-models-page/header-layout/div/div['
+                                                                        '2]/aside-layout/div['
+                                                                        '2]/app-models-info-panel/form/div/lta'
+                                                                        '-spoiler-panel/div/form/lta-select/label'
+                                                                        '/span[2]/span/span[2]/span[4]')))
         sub_model_directory_choose = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div'
                                                                         '/main/app-models-page/header-layout/div/div['
                                                                         '2]/aside-layout/div['
-                                                                        '2]/app-models-info-panel/form/div/form/lta'
-                                                                        '-select/label/span[2]/span/span[2]/span[4]')
+                                                                        '2]/app-models-info-panel/form/div/lta'
+                                                                        '-spoiler-panel/div/form/lta-select/label'
+                                                                        '/span[2]/span/span[2]/span[4]')
         sub_model_directory_choose.click()
         wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'btn.success.md')))
         save_button.click()
@@ -462,19 +481,27 @@ class TestModel:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
         sub_model_button = self.driver.find_element(By.XPATH, "//*[contains(text(),' Новая модель ')]")
         sub_model_button.click()
-        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
-                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
-                                                             '2]/app-models-info-panel/form/div/form/lta-input/label'
-                                                             '/span[2]/input')))
+        wait.until(ec.presence_of_element_located((By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
+                                                             "-models-page/header-layout/div/div[2]/aside-layout/div["
+                                                             "2]/app-models-info-panel/form/div/lta-spoiler-panel/div"
+                                                             "/form/lta-input/label/span[2]/input")))
         sub_model_name.send_keys('Test_directory2')
         sub_model_description.send_keys('Дочерняя модель по модели Directory #2')
+        wait.until(ec.element_to_be_clickable((By.CLASS_NAME, 'input.sm')))
         models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
         models_list.click()
+        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div'
+                                                             '/main/app-models-page/header-layout/div/div['
+                                                             '2]/aside-layout/div['
+                                                             '2]/app-models-info-panel/form/div/lta'
+                                                             '-spoiler-panel/div/form/lta-select/label'
+                                                             '/span[2]/span/span[2]/span[4]')))
         sub_model_directory_choose = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div'
                                                                         '/main/app-models-page/header-layout/div/div['
                                                                         '2]/aside-layout/div['
-                                                                        '2]/app-models-info-panel/form/div/form/lta'
-                                                                        '-select/label/span[2]/span/span[2]/span[4]')
+                                                                        '2]/app-models-info-panel/form/div/lta'
+                                                                        '-spoiler-panel/div/form/lta-select/label'
+                                                                        '/span[2]/span/span[2]/span[4]')
         sub_model_directory_choose.click()
         wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'btn.success.md')))
         save_button.click()
@@ -488,19 +515,27 @@ class TestModel:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
         sub_model_button = self.driver.find_element(By.XPATH, "//*[contains(text(),' Новая модель ')]")
         sub_model_button.click()
-        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
-                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
-                                                             '2]/app-models-info-panel/form/div/form/lta-input/label'
-                                                             '/span[2]/input')))
+        wait.until(ec.presence_of_element_located((By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
+                                                             "-models-page/header-layout/div/div[2]/aside-layout/div["
+                                                             "2]/app-models-info-panel/form/div/lta-spoiler-panel/div"
+                                                             "/form/lta-input/label/span[2]/input")))
         sub_model_name.send_keys('Test_float1')
         sub_model_description.send_keys('Дочерняя модель по модели Float #1')
+        wait.until(ec.element_to_be_clickable((By.CLASS_NAME, 'input.sm')))
         models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
         models_list.click()
+        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main'
+                                                                    '/app-models-page/header-layout/div/div['
+                                                                    '2]/aside-layout/div['
+                                                                    '2]/app-models-info-panel/form/div/lta-spoiler'
+                                                                    '-panel/div/form/lta-select/label/span['
+                                                                    '2]/span/span[2]/span[2]')))
         sub_model_float_choose = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main'
                                                                     '/app-models-page/header-layout/div/div['
                                                                     '2]/aside-layout/div['
-                                                                    '2]/app-models-info-panel/form/div/form/lta'
-                                                                    '-select/label/span[2]/span/span[2]/span[3]')
+                                                                    '2]/app-models-info-panel/form/div/lta-spoiler'
+                                                                    '-panel/div/form/lta-select/label/span['
+                                                                    '2]/span/span[2]/span[2]')
         sub_model_float_choose.click()
         wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'btn.success.md')))
         save_button.click()
@@ -514,19 +549,27 @@ class TestModel:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
         sub_model_button = self.driver.find_element(By.XPATH, "//*[contains(text(),' Новая модель ')]")
         sub_model_button.click()
-        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
-                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
-                                                             '2]/app-models-info-panel/form/div/form/lta-input/label'
-                                                             '/span[2]/input')))
+        wait.until(ec.presence_of_element_located((By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
+                                                             "-models-page/header-layout/div/div[2]/aside-layout/div["
+                                                             "2]/app-models-info-panel/form/div/lta-spoiler-panel/div"
+                                                             "/form/lta-input/label/span[2]/input")))
         sub_model_name.send_keys('Test_float2')
         sub_model_description.send_keys('Дочерняя модель по модели Float #2')
+        wait.until(ec.element_to_be_clickable((By.CLASS_NAME, 'input.sm')))
         models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
         models_list.click()
+        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main'
+                                                             '/app-models-page/header-layout/div/div['
+                                                             '2]/aside-layout/div['
+                                                             '2]/app-models-info-panel/form/div/lta-spoiler'
+                                                             '-panel/div/form/lta-select/label/span['
+                                                             '2]/span/span[2]/span[2]')))
         sub_model_float_choose = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main'
                                                                     '/app-models-page/header-layout/div/div['
                                                                     '2]/aside-layout/div['
-                                                                    '2]/app-models-info-panel/form/div/form/lta'
-                                                                    '-select/label/span[2]/span/span[2]/span[3]')
+                                                                    '2]/app-models-info-panel/form/div/lta-spoiler'
+                                                                    '-panel/div/form/lta-select/label/span['
+                                                                    '2]/span/span[2]/span[2]')
         sub_model_float_choose.click()
         wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'btn.success.md')))
         save_button.click()
@@ -539,19 +582,27 @@ class TestModel:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
         sub_model_button = self.driver.find_element(By.XPATH, "//*[contains(text(),' Новая модель ')]")
         sub_model_button.click()
-        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
-                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
-                                                             '2]/app-models-info-panel/form/div/form/lta-input/label'
-                                                             '/span[2]/input')))
+        wait.until(ec.presence_of_element_located((By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
+                                                             "-models-page/header-layout/div/div[2]/aside-layout/div["
+                                                             "2]/app-models-info-panel/form/div/lta-spoiler-panel/div"
+                                                             "/form/lta-input/label/span[2]/input")))
         sub_model_name.send_keys('Test_string1')
         sub_model_description.send_keys('Дочерняя модель по модели String #1')
+        wait.until(ec.element_to_be_clickable((By.CLASS_NAME, 'input.sm')))
         models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
         models_list.click()
+        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main'
+                                                                     '/app-models-page/header-layout/div/div['
+                                                                     '2]/aside-layout/div['
+                                                                     '2]/app-models-info-panel/form/div/lta-spoiler'
+                                                                     '-panel/div/form/lta-select/label/span['
+                                                                     '2]/span/span[2]/span[3]')))
         sub_model_string_choose = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main'
                                                                      '/app-models-page/header-layout/div/div['
                                                                      '2]/aside-layout/div['
-                                                                     '2]/app-models-info-panel/form/div/form/lta'
-                                                                     '-select/label/span[2]/span/span[2]/span[4]')
+                                                                     '2]/app-models-info-panel/form/div/lta-spoiler'
+                                                                     '-panel/div/form/lta-select/label/span['
+                                                                     '2]/span/span[2]/span[3]')
         sub_model_string_choose.click()
         wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'btn.success.md')))
         save_button.click()
@@ -564,19 +615,27 @@ class TestModel:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
         sub_model_button = self.driver.find_element(By.XPATH, "//*[contains(text(),' Новая модель ')]")
         sub_model_button.click()
-        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
-                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
-                                                             '2]/app-models-info-panel/form/div/form/lta-input/label'
-                                                             '/span[2]/input')))
+        wait.until(ec.presence_of_element_located((By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
+                                                             "-models-page/header-layout/div/div[2]/aside-layout/div["
+                                                             "2]/app-models-info-panel/form/div/lta-spoiler-panel/div"
+                                                             "/form/lta-input/label/span[2]/input")))
         sub_model_name.send_keys('Test_string2')
         sub_model_description.send_keys('Дочерняя модель по модели String #2')
+        wait.until(ec.element_to_be_clickable((By.CLASS_NAME, 'input.sm')))
         models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
         models_list.click()
+        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main'
+                                                             '/app-models-page/header-layout/div/div['
+                                                             '2]/aside-layout/div['
+                                                             '2]/app-models-info-panel/form/div/lta-spoiler'
+                                                             '-panel/div/form/lta-select/label/span['
+                                                             '2]/span/span[2]/span[3]')))
         sub_model_string_choose = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main'
                                                                      '/app-models-page/header-layout/div/div['
                                                                      '2]/aside-layout/div['
-                                                                     '2]/app-models-info-panel/form/div/form/lta'
-                                                                     '-select/label/span[2]/span/span[2]/span[4]')
+                                                                     '2]/app-models-info-panel/form/div/lta-spoiler'
+                                                                     '-panel/div/form/lta-select/label/span['
+                                                                     '2]/span/span[2]/span[3]')
         sub_model_string_choose.click()
         wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'btn.success.md')))
         save_button.click()
@@ -675,12 +734,12 @@ class TestModel:
         button_create_model.click()
         wait.until(ec.presence_of_element_located((By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
                                                              "-models-page/header-layout/div/div[2]/aside-layout/div["
-                                                             "2]/app-models-info-panel/form/div/form/lta-input/label"
-                                                             "/span[2]/input")))
+                                                             "2]/app-models-info-panel/form/div/lta-spoiler-panel/div"
+                                                             "/form/lta-input/label/span[2]/input")))
         model_name = self.driver.find_element(By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
                                                              "-models-page/header-layout/div/div[2]/aside-layout/div["
-                                                             "2]/app-models-info-panel/form/div/form/lta-input/label"
-                                                             "/span[2]/input")
+                                                             "2]/app-models-info-panel/form/div/lta-spoiler-panel/div"
+                                                             "/form/lta-input/label/span[2]/input")
         model_name.send_keys(name)
         model_description = self.driver.find_element(By.CLASS_NAME, 'textarea.sm')
         model_description.send_keys(description)
@@ -703,25 +762,33 @@ class TestModel:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
         sub_model_button = self.driver.find_element(By.XPATH, "//*[contains(text(),' Новая модель ')]")
         sub_model_button.click()
-        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
-                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
-                                                             '2]/app-models-info-panel/form/div/form/lta-input/label'
-                                                             '/span[2]/input')))
-        sub_model_name = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app-models'
-                                                            '-page/header-layout/div/div[2]/aside-layout/div['
-                                                            '2]/app-models-info-panel/form/div/form/lta-input/label'
-                                                            '/span[2]/input')
+        wait.until(ec.presence_of_element_located((By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
+                                                             "-models-page/header-layout/div/div[2]/aside-layout/div["
+                                                             "2]/app-models-info-panel/form/div/lta-spoiler-panel/div"
+                                                             "/form/lta-input/label/span[2]/input")))
+        sub_model_name = self.driver.find_element(By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
+                                                             "-models-page/header-layout/div/div[2]/aside-layout/div["
+                                                             "2]/app-models-info-panel/form/div/lta-spoiler-panel/div"
+                                                             "/form/lta-input/label/span[2]/input")
         sub_model_name.send_keys('Test_sub_model1')
         sub_model_description = self.driver.find_element(By.CLASS_NAME, 'textarea.sm.ng-valid.ng-dirty.ng-touched')
         sub_model_description.send_keys('Дочерняя модель #1')
+        wait.until(ec.element_to_be_clickable((By.CLASS_NAME, 'input.sm')))
         models_list = self.driver.find_element(By.CLASS_NAME, 'input.sm')
         models_list.click()
-        sub_model_boolean_choose = self.driver.find_element(By.XPATH,
-                                                                '/html/body/app-root/app-admin-layout/div/main'
-                                                                '/app-models-page/header-layout/div/div['
+        wait.until(ec.presence_of_element_located((By.XPATH,'/html/body/app-root/app-admin-layout/div/main/app'
+                                                                '-models-page/header-layout/div/div['
                                                                 '2]/aside-layout/div['
-                                                                '2]/app-models-info-panel/form/div/form/lta'
-                                                                '-select/label/span[2]/span/span[2]/span[1]')
+                                                                '2]/app-models-info-panel/form/div/lta-spoiler-panel'
+                                                                '/div/form/lta-select/label/span[2]/span/span['
+                                                                '2]/span[1]')))
+        sub_model_boolean_choose = self.driver.find_element(By.XPATH,
+                                                                '/html/body/app-root/app-admin-layout/div/main/app'
+                                                                '-models-page/header-layout/div/div['
+                                                                '2]/aside-layout/div['
+                                                                '2]/app-models-info-panel/form/div/lta-spoiler-panel'
+                                                                '/div/form/lta-select/label/span[2]/span/span['
+                                                                '2]/span[1]')
         sub_model_boolean_choose.click()
         wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'btn.success.md')))
         save_button = self.driver.find_element(By.CLASS_NAME, 'btn.success.md')
@@ -735,19 +802,27 @@ class TestModel:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
         sub_model_button = self.driver.find_element(By.XPATH, "//*[contains(text(),' Новая модель ')]")
         sub_model_button.click()
-        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
-                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
-                                                             '2]/app-models-info-panel/form/div/form/lta-input/label'
-                                                             '/span[2]/input')))
+        wait.until(ec.presence_of_element_located((By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
+                                                             "-models-page/header-layout/div/div[2]/aside-layout/div["
+                                                             "2]/app-models-info-panel/form/div/lta-spoiler-panel/div"
+                                                             "/form/lta-input/label/span[2]/input")))
         sub_model_name.send_keys('Test_sub_model1')
         sub_model_description.send_keys('Дочерняя модель #2')
+        wait.until(ec.element_to_be_clickable((By.CLASS_NAME, 'input.sm')))
         models_list.click()
+        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
+                                                             '-models-page/header-layout/div/div['
+                                                             '2]/aside-layout/div['
+                                                             '2]/app-models-info-panel/form/div/lta-spoiler-panel'
+                                                             '/div/form/lta-select/label/span[2]/span/span['
+                                                             '2]/span[1]')))
         sub_model_boolean_choose = self.driver.find_element(By.XPATH,
-                                                                '/html/body/app-root/app-admin-layout/div/main'
-                                                                '/app-models-page/header-layout/div/div['
-                                                                '2]/aside-layout/div['
-                                                                '2]/app-models-info-panel/form/div/form/lta'
-                                                                '-select/label/span[2]/span/span[2]/span[1]')
+                                                            '/html/body/app-root/app-admin-layout/div/main/app'
+                                                            '-models-page/header-layout/div/div['
+                                                            '2]/aside-layout/div['
+                                                            '2]/app-models-info-panel/form/div/lta-spoiler-panel'
+                                                            '/div/form/lta-select/label/span[2]/span/span['
+                                                            '2]/span[1]')
         sub_model_boolean_choose.click()
         wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'btn.success.md')))
         save_button.click()

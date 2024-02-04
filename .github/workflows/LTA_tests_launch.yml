@@ -41,12 +41,12 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    - name: Test with pytest 1
+    - name: Test HomePage
       if: always()
       run:
         pytest /home/runner/work/LTA_TESTS/LTA_TESTS/Test_Cases/test_homepage.py -s -v -p no:warnings --alluredir=allure-result
       continue-on-error: true
-    - name: Test with pytest 2
+    - name: Test Models Section
       if: always()
       run:
         pytest /home/runner/work/LTA_TESTS/LTA_TESTS/Test_Cases/test_model.py -s -v -p no:warnings --alluredir=allure-result

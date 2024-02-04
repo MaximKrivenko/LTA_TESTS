@@ -32,6 +32,8 @@ class TestObject:
             name = name + str(random.randint(0, 100))
             same_objects = len(self.driver.find_elements(By.XPATH, "//*[contains(text(),'" + name + "')]"))
 
+        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'btn.btn-icon.primary.md')))
+        wait.until(ec.element_to_be_clickable((By.CLASS_NAME, 'btn.btn-icon.primary.md')))
         button_create_object = self.driver.find_element(By.CLASS_NAME, 'btn.btn-icon.primary.md')
         button_create_object.click()
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
@@ -61,7 +63,7 @@ class TestObject:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'" + name + "')]")))
         print('Simple root object created')
         created_object = self.driver.find_element(By.XPATH, "//*[contains(text(),'" + name + "')]")
-        assert created_object.text == f'{name} Directory', 'Object was not created'
+        assert created_object.text == f'{name}', 'Object was not created'
         print('Simple root object checked')
         delete_button = self.driver.find_element(By.CLASS_NAME, 'btn.btn-icon.danger.md')
         time.sleep(2)
@@ -144,7 +146,7 @@ class TestObject:
         print('First simple root object created')
 
         created_object = self.driver.find_element(By.XPATH, "//*[contains(text(),'" + name + "')]")
-        assert created_object.text == f'{name} Directory', 'First simple object was not created'
+        assert created_object.text == f'{name}', 'First simple object was not created'
         print('First simple root object checked')
 
         print('Trying to create second simple root object with the same name...')
@@ -267,8 +269,8 @@ class TestObject:
         self.driver.refresh()
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'Directory')]")))
         chevron_right_button = self.driver.find_element(By.XPATH, "//*[contains(text(),"
-                                                                  "'" + name + "')]//parent::div//parent::div//child"
-                                                                               "::span//child::svg-icon")
+                                                                  "'" + name + "')]//parent::div//parent::div//parent"
+                                                                               "::div//child::span//child::svg-icon")
         chevron_right_button.click()
 
         wait.until(ec.visibility_of_element_located((By.XPATH, "//*[contains(text(),'" + name + "')]//parent"
@@ -328,7 +330,7 @@ class TestObject:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'" + child_name + "')]")))
         print('Child object created')
         child_object = self.driver.find_element(By.XPATH, "//*[contains(text(),'" + child_name + "')]")
-        assert child_object.text == f'{child_name} Directory', 'Root object does not have child object'
+        assert child_object.text == f'{child_name}', 'Root object does not have child object'
         print('Root object has child object')
 
         cancel_button = self.driver.find_element(By.CLASS_NAME, 'btn.secondary.md')
@@ -422,8 +424,8 @@ class TestObject:
         self.driver.refresh()
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'Directory')]")))
         chevron_right_button = self.driver.find_element(By.XPATH, "//*[contains(text(),"
-                                                                  "'" + name + "')]//parent::div//parent::div//child"
-                                                                               "::span//child::svg-icon")
+                                                                  "'" + name + "')]//parent::div//parent::div//parent"
+                                                                               "::div//child::span//child::svg-icon")
         chevron_right_button.click()
         wait.until(ec.visibility_of_element_located((By.XPATH, "//*[contains(text(),'" + name + "')]//parent"
                                                                                                 "::div//parent::div"
@@ -486,7 +488,7 @@ class TestObject:
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'" + child_name + "')]")))
         print('Child object created')
         child_object = self.driver.find_element(By.XPATH, "//*[contains(text(),'" + child_name + "')]")
-        assert child_object.text == f'{child_name} Directory', 'Root object does not have child object'
+        assert child_object.text == f'{child_name}', 'Root object does not have child object'
         print('Root object has child object')
 
         print('Trying to create second child object with the same name...')
@@ -637,8 +639,8 @@ class TestObject:
         self.driver.refresh()
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'Directory')]")))
         chevron_right_button = self.driver.find_element(By.XPATH, "//*[contains(text(),"
-                                                                  "'" + name + "')]//parent::div//parent::div//child"
-                                                                               "::span//child::svg-icon")
+                                                                  "'" + name + "')]//parent::div//parent::div//parent"
+                                                                               "::div//child::span//child::svg-icon")
         chevron_right_button.click()
         wait.until(ec.visibility_of_element_located((By.XPATH, "//*[contains(text(),'" + name + "')]//parent"
                                                                                                 "::div//parent::div"
@@ -845,8 +847,8 @@ class TestObject:
         cancel_button.click()
 
         chevron_right_button = self.driver.find_element(By.XPATH, "//*[contains(text(),"
-                                                                  "'" + model_name + "')]//parent::div//parent::div"
-                                                                                     "//child::span//child::svg-icon")
+                                                                  "'" + name + "')]//parent::div//parent::div//parent"
+                                                                               "::div//child::span//child::svg-icon")
         chevron_right_button.click()
 
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),' Новая модель ')]")))
