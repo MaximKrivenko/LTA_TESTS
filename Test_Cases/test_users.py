@@ -22,8 +22,6 @@ class TestUser:
         print('"Users smoke test" launched...')
         self.driver = users_page
 
-        wait = WebDriverWait(self.driver, 20, 0.5)
-
         try:
             table_users = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/lta-users'
                                                              '-page/lta-header-layout/div/div['

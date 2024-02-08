@@ -22,8 +22,6 @@ class TestRole:
         print('"Roles smoke test" launched...')
         self.driver = roles_page
 
-        wait = WebDriverWait(self.driver, 20, 0.5)
-
         try:
             table_roles = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/lta-roles'
                                                              '-page/lta-header-layout/div/div['
@@ -60,17 +58,30 @@ class TestRole:
             same_roles = len(self.driver.find_elements(By.XPATH, "//*[contains(text(),'" + name + "')]"))
 
         try:
-            button_create_role = self.driver.find_element(By.CLASS_NAME, 'btn.btn-icon.primary.md')
+            button_create_role_check = self.driver.find_element(By.CLASS_NAME, 'btn.btn-icon.primary.md')
         except:
             print('Create button is missing, check it out!')
 
         button_create_role = self.driver.find_element(By.CLASS_NAME, 'btn.btn-icon.primary.md')
         button_create_role.click()
-        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/lta-roles'
-                                                             '-page/lta-header-layout/div/div['
-                                                             '2]/lta-aside-layout/div['
-                                                             '2]/lta-roles-info-panel/div/form/div/lta-input/label'
-                                                             '/span[2]/input')))
+        wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'Отмена')]")))
+
+        try:
+            role_name_check = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/lta'
+                                                                 '-roles'
+                                                       '-page/lta-header-layout/div/div['
+                                                       '2]/lta-aside-layout/div['
+                                                       '2]/lta-roles-info-panel/div/form/div/lta-input/label'
+                                                       '/span[2]/input')
+        except:
+            print('Name input is missing, check it out!')
+
+        wait.until(ec.presence_of_all_elements_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/lta'
+                                                                  '-roles'
+                                                       '-page/lta-header-layout/div/div['
+                                                       '2]/lta-aside-layout/div['
+                                                       '2]/lta-roles-info-panel/div/form/div/lta-input/label'
+                                                       '/span[2]/input')))
 
         role_name = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/lta-roles'
                                                        '-page/lta-header-layout/div/div['
@@ -79,35 +90,26 @@ class TestRole:
                                                        '/span[2]/input')
         role_name.send_keys(name)
 
+        try:
+            role_description_check = self.driver.find_element(By.CLASS_NAME, 'textarea.ng-untouched.ng-pristine.ng'
+                                                                             '-valid')
+        except:
+            print('Description input im missing, check ot out!')
+
         wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'textarea.ng-untouched.ng-pristine.ng-valid')))
         role_description = self.driver.find_element(By.CLASS_NAME, 'textarea.ng-untouched.ng-pristine.ng-valid')
         role_description.send_keys(description)
 
-        try:
-            radiobutton_permissions = self.driver.find_element(By.CLASS_NAME, 'unchecked')
-        except:
-            print('Radio button "Permissions" is missing, check it out!')
-
-        radiobutton_permissions = self.driver.find_element(By.CLASS_NAME, 'unchecked')
+        radiobutton_permissions = self.driver.find_element(By.XPATH, "//*[contains(text(),'Права')]")
         radiobutton_permissions.click()
 
-        try:
-            create_button = self.driver.find_element(By.CLASS_NAME, 'btn.success.md')
-        except:
-            print('Create button is missing, check it out!')
-
-        create_button = self.driver.find_element(By.CLASS_NAME, 'btn.success.md')
+        create_button = self.driver.find_element(By.XPATH, "//*[contains(text(),'Создать')]")
         create_button.click()
 
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'" + name + "')]")))
         print('Role created')
 
-        try:
-            cancel_button = self.driver.find_element(By.CLASS_NAME, 'btn.secondary.md')
-        except:
-            print('Cancel button is missing, check it out!')
-
-        cancel_button = self.driver.find_element(By.CLASS_NAME, 'btn.secondary.md')
+        cancel_button = self.driver.find_element(By.XPATH, "//*[contains(text(),'Отмена')]")
         cancel_button.click()
 
         time.sleep(1)
@@ -117,15 +119,10 @@ class TestRole:
         print('Role checked')
 
         created_role.click()
-        created_role.click()
 
         time.sleep(2)
 
-        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/lta-roles'
-                                                             '-page/lta-header-layout/div/div['
-                                                             '2]/lta-aside-layout/div['
-                                                             '2]/lta-roles-info-panel/div/form/div/lta-input/label'
-                                                             '/span[2]/input')))
+        wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'Отмена')]")))
 
         try:
             delete_button = self.driver.find_element(By.CLASS_NAME, 'btn.btn-icon.danger.md')

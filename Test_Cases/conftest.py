@@ -50,16 +50,14 @@ def setup(get_webdriver):
 def authorization(setup):
     driver = setup
     wait_authorization_window = WebDriverWait(driver, 10, 0.3)
-    #wait_authorization_window.until(ec.presence_of_element_located((By.XPATH,
-                                   #'/html/body/app-root/app-auth-screen/app-login-screen/form/div/lta-input[1]/label/span[2]/input')))
-    wait_authorization_window.until(ec.presence_of_element_located((By.CLASS_NAME, 'with-icon.ng-untouched.ng-pristine.ng-valid')))
-    #username = driver.find_element(By.XPATH,
-                                   #'/html/body/app-root/app-auth-screen/app-login-screen/form/div/lta-input[1]/label/span[2]/input')
+    wait_authorization_window.until(ec.presence_of_element_located((By.CLASS_NAME, 'with-icon.ng-untouched.ng'
+                                                                                   '-pristine.ng-valid')))
     username = driver.find_element(By.CLASS_NAME, 'with-icon.ng-untouched.ng-pristine.ng-valid')
     username.send_keys(env_username)
     print('USERNAME PLACED')
     password = driver.find_element(By.XPATH,
-                                   '/html/body/app-root/app-auth-screen/app-login-screen/form/div/lta-input[2]/label/span[2]/input')
+                                   '/html/body/app-root/app-auth-screen/app-login-screen/form/div/lta-input['
+                                   '2]/label/span[2]/input')
     password.send_keys(env_password)
     print('PASSWORD PLACED')
     button_login = driver.find_element(By.XPATH,
@@ -91,19 +89,16 @@ def authorization1(setup):
 @pytest.fixture(scope='session')
 def models_page(authorization1):
     driver = authorization1
-    button_settings = driver.find_element(By.XPATH, '/html/body/app-root/app-main-page/toolbar/div/div[3]/div['
-                                                    '5]/svg-icon')
+    button_settings = driver.find_element(By.XPATH, '/html/body/app-root/lta-main-page/lta-toolbar/div/div[3]/div['
+                                                    '5]/lta-svg-icon')
     button_settings.click()
     wait_settings = WebDriverWait(driver, 10, 0.3)
-
-    #driver.switch_to.window(driver.window_handles[1])
-
     wait_settings.until(ec.url_to_be(f'{env_url}conf/settings/main'))
-    models_button = driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside/nav/ul/li['
+    models_button = driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/lta-menu/aside/nav/ul/li['
                                                   '4]/a')
     models_button.click()
     wait_models = WebDriverWait(driver, 10, 0.3)
-    wait_models.until(ec.url_to_be(f'{env_url}conf/data/models'))
+    wait_models.until(ec.url_to_be(f'{env_url}conf/models'))
     return driver
 
 
@@ -114,11 +109,7 @@ def objects_page(authorization1):
                                                     '5]/svg-icon')
     button_settings.click()
     wait = WebDriverWait(driver, 10, 0.3)
-
-    #driver.switch_to.window(driver.window_handles[1])
-
     wait_settings = WebDriverWait(driver, 10, 0.3)
-
     wait_settings.until(ec.url_to_be(f'{env_url}conf/settings/main'))
     objects_button = driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/app-menu/aside/nav/ul'
                                                    '/li[5]/a')
@@ -129,16 +120,14 @@ def objects_page(authorization1):
 @pytest.fixture(scope='session')
 def roles_page(authorization1):
     driver = authorization1
-    button_settings = driver.find_element(By.XPATH, '/html/body/app-root/lta-main-page/lta-toolbar/div/div[3]/div[5]/lta-svg-icon')
+    button_settings = driver.find_element(By.XPATH, '/html/body/app-root/lta-main-page/lta-toolbar/div/div[3]/div['
+                                                    '5]/lta-svg-icon')
     button_settings.click()
     wait = WebDriverWait(driver, 10, 0.3)
-
-    #driver.switch_to.window(driver.window_handles[1])
-
     wait_settings = WebDriverWait(driver, 10, 0.3)
-
     wait_settings.until(ec.url_to_be(f'{env_url}conf/settings/main'))
-    roles_button = driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/lta-menu/aside/nav/ul/li[2]/a')
+    roles_button = driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/lta-menu/aside/nav/ul/li['
+                                                 '2]/a')
     roles_button.click()
     wait.until(ec.url_to_be(f'{env_url}conf/roles'))
     return driver
@@ -146,16 +135,14 @@ def roles_page(authorization1):
 @pytest.fixture(scope='session')
 def users_page(authorization1):
     driver = authorization1
-    button_settings = driver.find_element(By.XPATH, '/html/body/app-root/lta-main-page/lta-toolbar/div/div[3]/div[5]/lta-svg-icon')
+    button_settings = driver.find_element(By.XPATH, '/html/body/app-root/lta-main-page/lta-toolbar/div/div[3]/div['
+                                                    '5]/lta-svg-icon')
     button_settings.click()
     wait = WebDriverWait(driver, 10, 0.3)
-
-    #driver.switch_to.window(driver.window_handles[1])
-
     wait_settings = WebDriverWait(driver, 10, 0.3)
-
     wait_settings.until(ec.url_to_be(f'{env_url}conf/settings/main'))
-    users_button = driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/lta-menu/aside/nav/ul/li[3]/a')
+    users_button = driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/lta-menu/aside/nav/ul/li['
+                                                 '3]/a')
     users_button.click()
     wait.until(ec.url_to_be(f'{env_url}conf/users'))
     return driver

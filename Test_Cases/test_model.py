@@ -13,19 +13,47 @@ env_url = os.getenv('URL')
 
 class TestModel:
     print(f'TEST MODELS LAUNCHED ON {env_url}')
+
+    @allure.description("Проверка работоспособности раздела 'Модели'")
+    # simple model test
+    @allure.title("Посещение раздела 'Модели' и его проверка")
+    def test_model_0(self, models_page):
+        print('"Models smoke test" launched...')
+        self.driver = models_page
+
+        try:
+            models_tree = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/lta'
+                                                             '-models-page/lta-header-layout/div/div['
+                                                             '2]/lta-aside-layout/div[1]/lta-empty-panel/lta-tree')
+        except:
+            print('Models tree is missing, check it out!')
+
+        boolean_model = self.driver.find_element(By.XPATH, "//*[contains(text(),'Boolean')]")
+        assert boolean_model.text == 'Boolean', 'Base model "Boolean" is missing'
+
+        float_model = self.driver.find_element(By.XPATH, "//*[contains(text(),'Float')]")
+        assert float_model.text == 'Float', 'Base model "Float" is missing'
+
+        string_model = self.driver.find_element(By.XPATH, "//*[contains(text(),'String')]")
+        assert string_model.text == 'String', 'Base model "String" is missing'
+
+        directory_model = self.driver.find_element(By.XPATH, "//*[contains(text(),'Directory')]")
+        assert directory_model.text == 'Directory', 'Base model "Directory" is missing'
+
+        print('"Models smoke test" passed')
+
+
     @allure.description("Проверка работоспособности раздела 'Модели'")
     # simple model test
     @allure.title("Создание простой модели, проверка и удаление")
-    def test_model(self, models_page):
+    def test_model_1(self, get_webdriver):
         print('Simple model test launched...')
-        self.driver = models_page
+        self.driver = get_webdriver
+
         name = 'AutoTest_Model'
         description = 'Тестовая модель'
-        wait = WebDriverWait(self.driver, 20, 0.5)
 
-        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
-                                                             '-models-page/header-layout/div/div[2]/aside-layout/div['
-                                                             '1]/lta-empty-panel')))
+        wait = WebDriverWait(self.driver, 20, 0.5)
 
         same_models = len(self.driver.find_elements(By.XPATH, "//*[contains(text(),'" + name + "')]"))
         if same_models == 1:
@@ -35,72 +63,92 @@ class TestModel:
             name = name + str(random.randint(0, 100))
             same_models = len(self.driver.find_elements(By.XPATH, "//*[contains(text(),'" + name + "')]"))
 
+        try:
+            button_create_model_check = self.driver.find_element(By.CLASS_NAME, 'btn.btn-icon.primary.md')
+        except:
+            print('Create button is missing, check ot out!')
+
         button_create_model = self.driver.find_element(By.CLASS_NAME, 'btn.btn-icon.primary.md')
         button_create_model.click()
-        wait.until(ec.presence_of_element_located((By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
-                                                             "-models-page/header-layout/div/div[2]/aside-layout/div["
-                                                             "2]/app-models-info-panel/form/div/lta-spoiler-panel/div"
-                                                             "/form/lta-input/label/span[2]/input")))
-        model_name = self.driver.find_element(By.XPATH, "/html/body/app-root/app-admin-layout/div/main/app"
-                                                             "-models-page/header-layout/div/div[2]/aside-layout/div["
-                                                             "2]/app-models-info-panel/form/div/lta-spoiler-panel/div"
-                                                             "/form/lta-input/label/span[2]/input")
+        wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'Имя')]")))
+
+        try:
+            model_name_check = self.driver.find_element(By.CLASS_NAME, 'classes.ng-untouched.ng-pristine.ng-valid')
+        except:
+            print('Name input is missing, check it out!')
+
+        model_name = self.driver.find_element(By.CLASS_NAME, 'classes.ng-untouched.ng-pristine.ng-valid')
         model_name.send_keys(name)
-        model_description = self.driver.find_element(By.CLASS_NAME, 'textarea.sm')
+
+        wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'Описание')]")))
+
+        try:
+            model_description_check = self.driver.find_element(By.CLASS_NAME, 'textarea.ng-untouched.ng-pristine.ng'
+                                                                              '-valid')
+        except:
+            print('Description input is missing, check it out!')
+
+        model_description = self.driver.find_element(By.CLASS_NAME, 'textarea.ng-untouched.ng-pristine.ng-valid')
         model_description.send_keys(description)
-        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'btn.success.md')))
-        save_button = self.driver.find_element(By.CLASS_NAME, 'btn.success.md')
-        save_button.click()
+
+        wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'Создать')]")))
+        create_button = self.driver.find_element(By.XPATH, "//*[contains(text(),'Создать')]")
+        create_button.click()
+
         wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'" + name + "')]")))
+        wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'Создано')]")))
+
         print('Simple model created')
+
+        cancel_button = self.driver.find_element(By.XPATH, "//*[contains(text(),'Отмена')]")
+        cancel_button.click()
+
+        time.sleep(1)
+
         created_model = self.driver.find_element(By.XPATH, "//*[contains(text(),'" + name + "')]")
         assert created_model.text == f'{name}', 'Model was not created'
         print('Simple model checked')
-        delete_button = self.driver.find_element(By.XPATH,
-                                                 '/html/body/app-root/app-admin-layout/div/main/app-models-page'
-                                                 '/header-layout/div/div['
-                                                 '1]/lta-header-panel/div/lta-empty-panel/div/lta-btn[2]/button')
+
+        created_model.click()
+        created_model.click()
+
+        wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'Отмена')]")))
+
+        try:
+            delete_button_check = self.driver.find_element(By.CLASS_NAME, 'btn.btn-icon.danger.md')
+        except:
+            print('Delete button is missing, check it out!')
+
+        delete_button = self.driver.find_element(By.CLASS_NAME, 'btn.btn-icon.danger.md')
         delete_button.click()
-        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
-                                                             '-models-page/lta-delete-dialog/lta-modal-layout/div/lta'
-                                                             '-modal/div[2]/lta-btn[2]/button')))
-        delete_button_window = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
-                                                                  '-models-page/lta-delete-dialog/lta-modal-layout'
-                                                                  '/div/lta-modal/div[2]/lta-btn[2]/button')
+        wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'Удалить')]")))
+        delete_modal_button = self.driver.find_element(By.XPATH, "//*[contains(text(),'Удалить')]")
+        delete_modal_button.click()
+
         time.sleep(2)
-        delete_button_window.click()
-        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app-models'
-                                                         '-page/app-model-delete-options-dialog/lta-modal-layout/div'
-                                                         '/lta-modal/div[2]/lta-btn[2]/button')))
-        wait.until(ec.element_to_be_clickable((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app-models'
-                                                         '-page/app-model-delete-options-dialog/lta-modal-layout/div'
-                                                         '/lta-modal/div[2]/lta-btn[2]/button')))
-        delete_button_window1 = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app'
-                                                                   '-models-page/app-model-delete-options-dialog/lta'
-                                                                   '-modal-layout/div/lta-modal/div[2]/lta-btn['
-                                                                   '2]/button')
+
+        wait.until(ec.presence_of_element_located((By.XPATH, "//*[contains(text(),'Удалить')]")))
+        delete_modal_button = self.driver.find_element(By.XPATH, "//*[contains(text(),'Удалить')]")
+        delete_modal_button.click()
+
         time.sleep(2)
-        delete_button_window1.click()
-        wait.until(ec.invisibility_of_element_located((By.XPATH,
-                                                       '/html/body/app-root/app-admin-layout/div/main/app-models-page'
-                                                       '/app-model-delete-options-dialog/lta-modal-layout/div/lta'
-                                                       '-modal/div[2]/lta-btn[2]/button')))
+
+        wait.until(ec.invisibility_of_element_located((By.XPATH, "//*[contains(text(),'Удалить')]")))
+
         assert len(self.driver.find_elements(By.XPATH, "//*[contains(text(),'" + name + "')]")) == 0, 'Simple model ' \
                                                                                                       'was not deleted'
         print('Simple model deleted')
+        print('"Simple model test" passed')
 
     # simple model component test
     @allure.description("Проверка работоспособности раздела 'Модели'")
     @allure.title("Создание простой модели, добавление в нее компонентов, проверка и удаление")
-    def test_model1(self, get_webdriver):
+    def test_model_2(self, get_webdriver):
         print('Simple model component test launched...')
         self.driver = get_webdriver
         name = 'AutoTest_Model'
         description = 'Тестовая модель'
         wait = WebDriverWait(self.driver, 15, 0.5)
-        wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/app-models'
-                                                             '-page/header-layout/div/div[2]/aside-layout/div['
-                                                             '1]/lta-empty-panel/app-tree')))
 
         same_models = len(self.driver.find_elements(By.XPATH, "//*[contains(text(),'" + name + "')]"))
         while same_models != 0:
