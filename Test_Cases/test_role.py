@@ -184,6 +184,9 @@ class TestRole:
                                                        '2]/lta-aside-layout/div['
                                                        '2]/lta-roles-info-panel/div/form/div/lta-input/label'
                                                        '/span[2]/input')
+        
+        time.sleep(1)
+
         role_name.send_keys(name)
 
         wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'textarea.ng-valid.ng-dirty.ng-touched')))
@@ -228,6 +231,11 @@ class TestRole:
         button_create_role = self.driver.find_element(By.CLASS_NAME, 'btn.btn-icon.primary.md')
         button_create_role.click()
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/lta-roles'
+                                                             '-page/lta-header-layout/div/div['
+                                                             '2]/lta-aside-layout/div['
+                                                             '2]/lta-roles-info-panel/div/form/div/lta-input/label'
+                                                             '/span[2]/input')))
+        wait.until(ec.element_to_be_clickable((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/lta-roles'
                                                              '-page/lta-header-layout/div/div['
                                                              '2]/lta-aside-layout/div['
                                                              '2]/lta-roles-info-panel/div/form/div/lta-input/label'
@@ -324,6 +332,9 @@ class TestRole:
                                                            '2]/lta-aside-layout/div['
                                                            '2]/lta-roles-info-panel/div/form/div/lta-input/label'
                                                            '/span[2]/input')
+        
+        time.sleep(1)
+
         role_name.send_keys(name)
 
         wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'textarea.ng-valid.ng-dirty.ng-touched')))
@@ -364,7 +375,7 @@ class TestRole:
         print('Role checked')
 
         created_role.click()
-        created_role.click()
+        #created_role.click()
 
         wait.until(
             ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/lta-roles'
@@ -374,11 +385,20 @@ class TestRole:
                                                           '/span[2]/input')))
 
         name_edited = name + str(random.randint(0, 100))
+
+        wait.until(ec.element_to_be_clickable((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/lta-roles'
+                                                       '-page/lta-header-layout/div/div['
+                                                       '2]/lta-aside-layout/div['
+                                                       '2]/lta-roles-info-panel/div/form/div/lta-input/label'
+                                                       '/span[2]/input')))
+
         role_name = self.driver.find_element(By.XPATH, '/html/body/app-root/app-admin-layout/div/main/lta-roles'
                                                        '-page/lta-header-layout/div/div['
                                                        '2]/lta-aside-layout/div['
                                                        '2]/lta-roles-info-panel/div/form/div/lta-input/label'
                                                        '/span[2]/input')
+        
+
         role_name.clear()
 
         time.sleep(1)
@@ -388,6 +408,9 @@ class TestRole:
         wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'textarea.ng-valid.ng-dirty.ng-touched')))
         role_description = self.driver.find_element(By.CLASS_NAME, 'textarea.ng-valid.ng-dirty.ng-touched')
         description_edited = description + str(random.randint(0, 100))
+
+        time.sleep(1)
+
         role_description.clear()
 
         time.sleep(1)
@@ -407,13 +430,15 @@ class TestRole:
         print('Role has been edited')
 
         edited_role.click()
-        edited_role.click()
+        #edited_role.click()
 
         wait.until(ec.presence_of_element_located((By.XPATH, '/html/body/app-root/app-admin-layout/div/main/lta-roles'
                                                              '-page/lta-header-layout/div/div['
                                                              '2]/lta-aside-layout/div['
                                                              '2]/lta-roles-info-panel/div/form/div/lta-input/label'
                                                              '/span[2]/input')))
+
+        wait.until(ec.presence_of_element_located((By.CLASS_NAME, 'btn.btn-icon.danger.md')))
 
         delete_button = self.driver.find_element(By.CLASS_NAME, 'btn.btn-icon.danger.md')
         delete_button.click()
